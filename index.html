@@ -1254,33 +1254,6 @@
                     </div>
 
 
-                    <div class="flight-row" data-trip="custom" onclick="selectFlight('custom')">
-                        <div class="flight-icon-container">
-                            <div class="flight-icon">✈️</div>
-                        </div>
-                        <div class="flight-time-info">
-                            <div class="flight-time" id="time-custom">Flexible timing</div>
-                            <div class="flight-name">Custom Flight • Your Choice</div>
-                        </div>
-                        <div class="flight-duration">
-                            <div>Variable</div>
-                        </div>
-                        <div class="flight-route-info">
-                            <div class="flight-stops">Custom</div>
-                            <div class="flight-airports">SQL–TBD</div>
-                        </div>
-                        <div class="status-column">
-                            <div class="status-indicator wind-good">
-                                <div class="weather-info">
-                                    <span class="weather-value">--</span>
-                                    <span class="weather-label">on request</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flight-price">
-                            Free
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1426,8 +1399,7 @@
         const destinations = {
             'bay-tour': { name: 'Bay Tour', airports: ['KSQL'], route: 'Local Area' },
             'monterey': { name: 'Monterey Bay', airports: ['KSQL', 'KMRY'], route: 'KMRY' },
-            'napa-valley': { name: 'Sonoma County', airports: ['KSQL', 'KSTS'], route: 'KSTS' },
-            'custom': { name: 'Custom Flight', airports: ['KSQL'], route: 'TBD' }
+            'napa-valley': { name: 'Sonoma County', airports: ['KSQL', 'KSTS'], route: 'KSTS' }
         };
 
         let selectedFlight = null;
@@ -1921,8 +1893,7 @@
             const destinations = {
                 'bay-tour': { name: 'Bay Tour', airports: ['KSQL'], route: 'Local Area', duration: '1 hr', stops: 'Nonstop' },
                 'monterey': { name: 'Monterey Bay', airports: ['KSQL', 'KMRY'], route: 'SQL–MRY', duration: '2 hr', stops: '1 hr MRY' },
-                'napa-valley': { name: 'Sonoma County', airports: ['KSQL', 'KSTS'], route: 'SQL–STS', duration: '1 hr 30 min', stops: '45 min STS' },
-                'custom': { name: 'Custom Flight', airports: ['KSQL'], route: 'SQL–TBD', duration: 'TBD', stops: 'TBD' }
+                'napa-valley': { name: 'Sonoma County', airports: ['KSQL', 'KSTS'], route: 'SQL–STS', duration: '1 hr 30 min', stops: '45 min STS' }
             };
             
             const destination = destinations[tripId];
