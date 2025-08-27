@@ -375,25 +375,19 @@
         }
 
         .flights-header-row {
-            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
-            color: white;
-            display: grid;
-            grid-template-columns: 2.5fr 1fr 1fr 120px;
-            padding: 20px 30px;
-            font-weight: 600;
-            font-size: 1.05em;
-            align-items: center;
+            display: none; /* Hide header - Google Flights style doesn't have column headers */
         }
 
         .flight-row {
             display: grid;
-            grid-template-columns: 2.5fr 1fr 1fr 120px;
-            padding: 25px 30px;
+            grid-template-columns: 60px 2fr 1fr 1fr 1fr 100px;
+            padding: 16px 24px;
             align-items: center;
-            border-bottom: 1px solid rgba(50, 130, 184, 0.1);
-            transition: all 0.3s ease;
+            border-bottom: 1px solid #e8eaed;
+            transition: all 0.2s ease;
             cursor: pointer;
             position: relative;
+            background: white;
         }
 
         .flight-row:last-child {
@@ -401,43 +395,70 @@
         }
 
         .flight-row:hover {
-            background: rgba(187, 225, 250, 0.05);
-            box-shadow: inset 0 0 0 2px rgba(50, 130, 184, 0.1);
+            background: #f8f9fa;
         }
 
         .flight-row.selected {
-            background: rgba(187, 225, 250, 0.15);
-            box-shadow: inset 0 0 0 2px #3282b8;
+            background: #e8f0fe;
+            border-left: 3px solid #1a73e8;
+            padding-left: 21px;
         }
 
-        .flight-route {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 20px;
+        .flight-icon-container {
+            display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         .flight-icon {
-            font-size: 2.2em;
+            font-size: 1.5em;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
 
-        .route-details h3 {
-            font-size: 1.3em;
-            color: #0f4c75;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .flight-time-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .route-details p {
-            color: #546e7a;
-            font-size: 0.95em;
-            margin-bottom: 2px;
-        }
-
-        .route-time {
-            color: #607d8b;
+        .flight-time {
+            font-size: 1.1em;
             font-weight: 500;
-            font-size: 0.9em;
+            color: #202124;
+        }
+
+        .flight-name {
+            font-size: 0.875em;
+            color: #5f6368;
+        }
+
+        .flight-duration {
+            text-align: center;
+            font-size: 0.875em;
+            color: #5f6368;
+        }
+
+        .flight-route-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: center;
+        }
+
+        .flight-stops {
+            font-size: 0.875em;
+            color: #202124;
+        }
+
+        .flight-airports {
+            font-size: 0.75em;
+            color: #5f6368;
         }
 
         .status-column {
@@ -531,27 +552,13 @@
             color: #5f6368;
         }
 
-        .select-flight-btn {
-            background: rgba(50, 130, 184, 0.1);
-            color: #3282b8;
-            border: 2px solid #3282b8;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .select-flight-btn:hover {
-            background: #3282b8;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .select-flight-btn.selected {
-            background: #3282b8;
-            color: white;
+        .flight-price {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: 1.25em;
+            font-weight: 500;
+            color: #202124;
         }
 
         .booking-container {
@@ -854,13 +861,19 @@
                     </div>
 
                     <div class="flight-row" data-trip="bay-tour" onclick="selectFlight('bay-tour')">
-                        <div class="flight-route">
+                        <div class="flight-icon-container">
                             <div class="flight-icon">🌉</div>
-                            <div class="route-details">
-                                <h3>Bay Tour</h3>
-                                <p>Golden Gate Bridge, Alcatraz, SF Skyline</p>
-                                <div class="route-time">1.5 hours • San Carlos ↔ Bay Area</div>
-                            </div>
+                        </div>
+                        <div class="flight-time-info">
+                            <div class="flight-time" id="time-bay-tour">10:00 AM – 11:30 AM</div>
+                            <div class="flight-name">Bay Tour • Golden Gate Bridge</div>
+                        </div>
+                        <div class="flight-duration">
+                            <div>1 hr 30 min</div>
+                        </div>
+                        <div class="flight-route-info">
+                            <div class="flight-stops">Nonstop</div>
+                            <div class="flight-airports">SQL–Local</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-bay-tour">
@@ -870,24 +883,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="status-column">
-                            <div class="status-indicator clouds-checking" id="clouds-bay-tour">
-                                -- checking
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <button class="select-flight-btn" id="btn-bay-tour">Select</button>
+                        <div class="flight-price">
+                            Free
                         </div>
                     </div>
 
                     <div class="flight-row" data-trip="monterey" onclick="selectFlight('monterey')">
-                        <div class="flight-route">
+                        <div class="flight-icon-container">
                             <div class="flight-icon">🐋</div>
-                            <div class="route-details">
-                                <h3>Monterey Bay</h3>
-                                <p>Coastal flight down Highway 1, lunch at MRY</p>
-                                <div class="route-time">2.5 hours • San Carlos → Monterey</div>
-                            </div>
+                        </div>
+                        <div class="flight-time-info">
+                            <div class="flight-time" id="time-monterey">10:00 AM – 12:30 PM</div>
+                            <div class="flight-name">Monterey Bay • Coastal Route</div>
+                        </div>
+                        <div class="flight-duration">
+                            <div>2 hr 30 min</div>
+                        </div>
+                        <div class="flight-route-info">
+                            <div class="flight-stops">1 stop</div>
+                            <div class="flight-airports">SQL–MRY</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-monterey">
@@ -897,25 +911,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="status-column">
-                            <div class="status-indicator clouds-checking" id="clouds-monterey">
-                                -- checking
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <button class="select-flight-btn" id="btn-monterey">Select</button>
+                        <div class="flight-price">
+                            Free
                         </div>
                     </div>
 
 
                     <div class="flight-row" data-trip="napa-valley" onclick="selectFlight('napa-valley')">
-                        <div class="flight-route">
+                        <div class="flight-icon-container">
                             <div class="flight-icon">🍷</div>
-                            <div class="route-details">
-                                <h3>Napa Valley</h3>
-                                <p>Wine country views, valley scenic flight</p>
-                                <div class="route-time">2 hours • San Carlos → Napa Valley</div>
-                            </div>
+                        </div>
+                        <div class="flight-time-info">
+                            <div class="flight-time" id="time-napa-valley">10:00 AM – 12:00 PM</div>
+                            <div class="flight-name">Napa Valley • Wine Country</div>
+                        </div>
+                        <div class="flight-duration">
+                            <div>2 hr</div>
+                        </div>
+                        <div class="flight-route-info">
+                            <div class="flight-stops">Nonstop</div>
+                            <div class="flight-airports">SQL–APC</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-napa-valley">
@@ -925,38 +940,37 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="status-column">
-                            <div class="status-indicator clouds-checking" id="clouds-napa-valley">
-                                -- checking
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <button class="select-flight-btn" id="btn-napa-valley">Select</button>
+                        <div class="flight-price">
+                            Free
                         </div>
                     </div>
 
 
                     <div class="flight-row" data-trip="custom" onclick="selectFlight('custom')">
-                        <div class="flight-route">
+                        <div class="flight-icon-container">
                             <div class="flight-icon">✈️</div>
-                            <div class="route-details">
-                                <h3>Custom Flight</h3>
-                                <p>Your choice of destination</p>
-                                <div class="route-time">Variable • San Carlos → Your Choice</div>
-                            </div>
+                        </div>
+                        <div class="flight-time-info">
+                            <div class="flight-time" id="time-custom">Flexible timing</div>
+                            <div class="flight-name">Custom Flight • Your Choice</div>
+                        </div>
+                        <div class="flight-duration">
+                            <div>Variable</div>
+                        </div>
+                        <div class="flight-route-info">
+                            <div class="flight-stops">Custom</div>
+                            <div class="flight-airports">SQL–TBD</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-good">
-                                ✅ Check on request
+                                <div class="weather-info">
+                                    <span class="weather-value">--</span>
+                                    <span class="weather-label">on request</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="status-column">
-                            <div class="status-indicator clouds-clear">
-                                ✅ Check on request
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <button class="select-flight-btn" id="btn-custom">Select</button>
+                        <div class="flight-price">
+                            Free
                         </div>
                     </div>
                 </div>
@@ -1241,6 +1255,42 @@
             currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
             renderCalendar();
         }
+        
+        function updateFlightTimes(selectedTime) {
+            if (!selectedTime) return;
+            
+            const [hours, minutes] = selectedTime.split(':').map(Number);
+            const startTime = new Date();
+            startTime.setHours(hours, minutes, 0);
+            
+            // Bay Tour - 1.5 hours
+            const bayEnd = new Date(startTime);
+            bayEnd.setMinutes(bayEnd.getMinutes() + 90);
+            document.getElementById('time-bay-tour').textContent = 
+                `${formatTime(startTime)} – ${formatTime(bayEnd)}`;
+            
+            // Monterey - 2.5 hours  
+            const mryEnd = new Date(startTime);
+            mryEnd.setMinutes(mryEnd.getMinutes() + 150);
+            document.getElementById('time-monterey').textContent = 
+                `${formatTime(startTime)} – ${formatTime(mryEnd)}`;
+            
+            // Napa - 2 hours
+            const napaEnd = new Date(startTime);
+            napaEnd.setMinutes(napaEnd.getMinutes() + 120);
+            document.getElementById('time-napa-valley').textContent = 
+                `${formatTime(startTime)} – ${formatTime(napaEnd)}`;
+        }
+        
+        function formatTime(date) {
+            let hours = date.getHours();
+            const minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+            return `${hours}:${minutesStr} ${ampm}`;
+        }
 
         function searchFlights() {
             const dateInput = document.getElementById('flightDate').value;
@@ -1262,6 +1312,9 @@
             // Show flights container
             document.getElementById('flightsContainer').style.display = 'block';
 
+            // Update flight times based on selected time
+            updateFlightTimes(selectedTime);
+            
             // Reset all status indicators to loading state
             Object.keys(destinations).forEach(tripId => {
                 if (tripId === 'custom') return;
