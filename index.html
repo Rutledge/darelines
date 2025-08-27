@@ -906,6 +906,10 @@
         const WINDY_API_KEY = '{{WINDY_API_KEY}}';
         const SITE_PASSWORD = '{{SITE_PASSWORD}}';
         
+        // Debug logging (remove in production)
+        console.log('API Key length:', WINDY_API_KEY.length);
+        console.log('API Key starts with:', WINDY_API_KEY.substring(0, 5));
+        
         const weatherMinimums = {
             windSpeed: 15,
             visibility: 5,

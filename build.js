@@ -8,6 +8,10 @@ const html = fs.readFileSync('index.html', 'utf8');
 const windyApiKey = process.env.WINDY_API_KEY || '';
 const sitePassword = process.env.SITE_PASSWORD || 'dare2fly';
 
+console.log('Environment variables:');
+console.log('WINDY_API_KEY length:', windyApiKey.length);
+console.log('SITE_PASSWORD:', sitePassword);
+
 let processedHtml = html.replace(/\{\{WINDY_API_KEY\}\}/g, windyApiKey);
 processedHtml = processedHtml.replace(/\{\{SITE_PASSWORD\}\}/g, sitePassword);
 
