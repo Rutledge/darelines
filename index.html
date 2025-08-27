@@ -1026,8 +1026,8 @@
                     const planeAvailable = await checkPlaneAvailability(tripId, flightDateTime);
                     updatePlaneStatus(tripId, planeAvailable);
                     
-                    // Show weather check links instead of API calls (CORS issues)
-                    updateWeatherStatusWithLinks(tripId, destinationAirport);
+                    // Fetch real weather data from Windy API
+                    await fetchWindyWeather(tripId, destinationAirport);
                 }, 300 + (index * 600));
             });
         }
@@ -1054,6 +1054,129 @@
         }
 
 
+        async function fetchWindyWeather(tripId, airportCode) {
+            const windElement = document.getElementById(`wind-${tripId}`);
+            const cloudsElement = document.getElementById(`clouds-${tripId}`);
+            
+            try {
+                // Get airport coordinates (simplified - in production you'd have a lookup table)
+                const airportCoords = getAirportCoordinates(airportCode);
+                
+                const response = await fetch('https://api.windy.com/api/point-forecast/v2', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        key: WINDY_API_KEY,
+                        lat: airportCoords.lat,
+                        lon: airportCoords.lon,
+                        model: 'gfs',
+                        parameters: ['wind', 'windGust', 'cloudcover'],
+                        levels: ['surface'],
+                        step: 3
+                    })
+                });
+                
+                const data = await response.json();
+                console.log(`Windy API response for ${airportCode}:`, data);
+                
+                if (data && data.wind_u && data.wind_v) {
+                    updateWeatherFromWindyData(tripId, airportCode, data);
+                } else {
+                    console.error('Invalid Windy API response:', data);
+                    updateWeatherStatusWithLinks(tripId, airportCode);
+                }
+                
+            } catch (error) {
+                console.error(`Error fetching weather for ${airportCode}:`, error);
+                updateWeatherStatusWithLinks(tripId, airportCode);
+            }
+        }
+        
+        function getAirportCoordinates(airportCode) {
+            // Airport coordinates lookup
+            const airports = {
+                'KSQL': { lat: 37.512, lon: -122.250 }, // San Carlos
+                'KMRY': { lat: 36.587, lon: -121.843 }, // Monterey
+                'KAPC': { lat: 38.213, lon: -122.281 }  // Napa
+            };
+            return airports[airportCode] || { lat: 37.512, lon: -122.250 };
+        }
+        
+        function updateWeatherFromWindyData(tripId, airportCode, data) {
+            const windElement = document.getElementById(`wind-${tripId}`);
+            const cloudsElement = document.getElementById(`clouds-${tripId}`);
+            
+            // Calculate wind speed from u/v components (first data point)
+            const windU = data.wind_u[0];
+            const windV = data.wind_v[0];
+            const windSpeed = Math.sqrt(windU * windU + windV * windV);
+            const windSpeedKnots = Math.round(windSpeed * 1.944); // Convert m/s to knots
+            
+            // Get gust and cloud data
+            const gustSpeed = data.windGust ? Math.round(data.windGust[0] * 1.944) : null;
+            const cloudCover = data.cloudcover ? data.cloudcover[0] : 0;
+            
+            console.log(`${airportCode} Weather:`, {
+                windSpeedKnots,
+                gustSpeed,
+                cloudCover
+            });
+            
+            // Update wind status
+            const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
+            
+            let windStatus, windClass, windIcon;
+            if (windSpeedKnots <= 8) {
+                windStatus = 'Good';
+                windClass = 'wind-good';
+                windIcon = '✅';
+            } else if (windSpeedKnots <= 15) {
+                windStatus = 'Caution';
+                windClass = 'wind-caution';
+                windIcon = '⚠️';
+            } else {
+                windStatus = 'Too Strong';
+                windClass = 'wind-bad';
+                windIcon = '❌';
+            }
+            
+            windElement.className = `status-indicator ${windClass}`;
+            windElement.innerHTML = `${windIcon} ${windSpeedKnots}kt${gustSpeed && gustSpeed > windSpeedKnots + 5 ? ` G${gustSpeed}` : ''}`;
+            windElement.style.cursor = 'pointer';
+            windElement.title = `Click to view ${airportCode} forecast`;
+            windElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+            
+            // Update clouds status
+            let cloudsStatus, cloudsClass, cloudsIcon;
+            if (cloudCover <= 25) {
+                cloudsStatus = 'Clear';
+                cloudsClass = 'clouds-clear';
+                cloudsIcon = '☀️';
+            } else if (cloudCover <= 75) {
+                cloudsStatus = 'Scattered';
+                cloudsClass = 'clouds-scattered';
+                cloudsIcon = '⛅';
+            } else {
+                cloudsStatus = 'Overcast';
+                cloudsClass = 'clouds-overcast';
+                cloudsIcon = '☁️';
+            }
+            
+            cloudsElement.className = `status-indicator ${cloudsClass}`;
+            cloudsElement.innerHTML = `${cloudsIcon} ${cloudsStatus}`;
+            cloudsElement.style.cursor = 'pointer';
+            cloudsElement.title = `Click to view ${airportCode} forecast`;
+            cloudsElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+        }
+        
         function updateWeatherStatusWithLinks(tripId, airportCode) {
             const windElement = document.getElementById(`wind-${tripId}`);
             const cloudsElement = document.getElementById(`clouds-${tripId}`);
