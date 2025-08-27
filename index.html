@@ -1115,7 +1115,7 @@
         <div class="content">
             <!-- Search/Calendar Section -->
             <div class="search-container">
-                <h2>Planned flights - check if you want to join</h2>
+                <h2>Weather check for flights</h2>
                 <div class="search-form">
                     <div class="search-field">
                         <label for="flightDate">Departure Date</label>
@@ -1278,22 +1278,9 @@
 
                     <!-- Passenger Form -->
                     <div class="passenger-form">
-                        <h3>Send weather planning suggestion</h3>
-                        <form class="booking-form" onsubmit="submitBooking(event)">
-                            <div class="input-group">
-                                <label for="passengerName">First and last name</label>
-                                <input type="text" id="passengerName" name="passengerName" required placeholder="Enter your full name">
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="specialRequests">Notes about conditions <span class="optional">(Optional)</span></label>
-                                <textarea id="specialRequests" name="specialRequests" placeholder="Questions about weather conditions or route preferences"></textarea>
-                            </div>
-                            
-                            <button type="button" class="booking-submit-btn" onclick="sendText()">
-                                💬 Text me about this flight
-                            </button>
-                        </form>
+                        <button type="button" class="booking-submit-btn" onclick="sendText()">
+                            💬 Text Dare about this flight
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1908,11 +1895,8 @@
                 alert('Please select a flight date, time, and destination first.');
                 return;
             }
-
-            const name = document.getElementById('passengerName').value;
-            const specialRequests = document.getElementById('specialRequests').value;
             
-            const message = `${name} interested in ${destinations[selectedFlight].name} on ${window.selectedDate} at ${selectedTime}. ${specialRequests ? 'Notes: ' + specialRequests : ''}`;
+            const message = `Interested in ${destinations[selectedFlight].name} on ${window.selectedDate} at ${selectedTime}.`;
             
             // On Mac, this will open Messages app with prefilled text
             window.location.href = `sms:&body=${encodeURIComponent(message)}`;
