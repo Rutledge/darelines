@@ -737,6 +737,81 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         }
 
+        .disclaimer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .disclaimer-dialog {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .disclaimer-dialog h2 {
+            margin: 0 0 20px 0;
+            color: #d93025;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .disclaimer-content {
+            color: #202124;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .disclaimer-content p {
+            margin: 0 0 16px 0;
+        }
+
+        .disclaimer-content ul {
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+
+        .disclaimer-content li {
+            margin: 8px 0;
+        }
+
+        .risk-notice {
+            background: #fef7e0;
+            border: 1px solid #f9ab00;
+            border-radius: 8px;
+            padding: 12px;
+            color: #b06000;
+        }
+
+        .disclaimer-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .disclaimer-btn:hover {
+            background: #1557b0;
+        }
+
         .form-group {
             display: flex;
             flex-direction: column;
@@ -959,6 +1034,27 @@
         <input type="password" class="password-input" id="passwordInput" placeholder="Enter access code" onkeypress="if(event.key === 'Enter') checkPassword()">
         <button class="submit-btn" onclick="checkPassword()">Enter</button>
         <div class="error-message" id="errorMessage">Access code incorrect. Please try again.</div>
+    </div>
+
+    <!-- Disclaimer Dialog -->
+    <div class="disclaimer-overlay" id="disclaimerOverlay">
+        <div class="disclaimer-dialog">
+            <h2>⚠️ Important Notice</h2>
+            <div class="disclaimer-content">
+                <p><strong>This is NOT a commercial airline or charter service.</strong></p>
+                <p>Darelines is a private, personal website for sharing flights with friends in a personally-owned aircraft. This is not a business operation.</p>
+                <ul>
+                    <li>✈️ Private RV-12iS aircraft (N962TF)</li>
+                    <li>🛡️ Recreational flights only</li>
+                    <li>👥 Invitation-only for trusted friends</li>
+                    <li>📋 Not subject to commercial aviation regulations</li>
+                </ul>
+                <p class="risk-notice">
+                    <strong>Risk Notice:</strong> General aviation carries inherent risks. By proceeding, you acknowledge you understand the risks involved in private aircraft operations.
+                </p>
+            </div>
+            <button class="disclaimer-btn" onclick="acceptDisclaimer()">I Understand - Continue to Darelines</button>
+        </div>
     </div>
 
     <div class="main-container" id="mainContainer">
@@ -1249,12 +1345,17 @@
             const password = document.getElementById('passwordInput').value;
             if (password === SITE_PASSWORD) {
                 document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-                initializeDatePicker();
+                document.getElementById('disclaimerOverlay').style.display = 'flex';
             } else {
                 document.getElementById('errorMessage').style.display = 'block';
                 document.getElementById('passwordInput').value = '';
             }
+        }
+
+        function acceptDisclaimer() {
+            document.getElementById('disclaimerOverlay').style.display = 'none';
+            document.getElementById('mainContainer').style.display = 'block';
+            initializeDatePicker();
         }
         
         const weatherMinimums = {
