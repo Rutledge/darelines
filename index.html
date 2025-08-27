@@ -1093,20 +1093,22 @@
 
             // Set booking date limits
             const today = new Date();
-            minBookingDate = new Date();
-            minBookingDate.setDate(today.getDate() + 4);
+            minBookingDate = today;  // Allow booking from today
             maxBookingDate = new Date();
             maxBookingDate.setDate(today.getDate() + 14);
 
             // Set current calendar to today's month
             currentCalendarDate = new Date(today.getFullYear(), today.getMonth(), 1);
             
-            // Set default selected date
-            selectedDate = new Date(minBookingDate);
+            // Set default selected date to today
+            selectedDate = new Date(today);
             dateInput.value = formatDateForDisplay(selectedDate);
             
             // Initialize calendar
             renderCalendar();
+            
+            // Update available times for today
+            updateAvailableTimes();
             
             // Calendar event listeners
             dateInput.addEventListener('click', toggleCalendar);
@@ -1229,9 +1231,47 @@
             
             renderCalendar(); // Re-render to update selected state
             
+            // Update available times based on selected date
+            updateAvailableTimes();
+            
             // Trigger search button update
             const event = new Event('input');
             document.getElementById('flightDate').dispatchEvent(event);
+        }
+        
+        function updateAvailableTimes() {
+            const timeSelect = document.getElementById('flightTime');
+            const currentTime = new Date();
+            const isToday = selectedDate && 
+                selectedDate.getDate() === currentTime.getDate() &&
+                selectedDate.getMonth() === currentTime.getMonth() &&
+                selectedDate.getFullYear() === currentTime.getFullYear();
+            
+            // Get current hour in PST
+            const currentHourPST = currentTime.getHours();
+            
+            // Enable/disable time options based on whether it's today
+            const options = timeSelect.querySelectorAll('option');
+            options.forEach(option => {
+                if (option.value) {
+                    const [hour] = option.value.split(':').map(Number);
+                    if (isToday && hour <= currentHourPST) {
+                        option.disabled = true;
+                        option.style.color = '#ccc';
+                    } else {
+                        option.disabled = false;
+                        option.style.color = '';
+                    }
+                }
+            });
+            
+            // If selected time is now disabled, clear it
+            if (isToday && timeSelect.value) {
+                const [selectedHour] = timeSelect.value.split(':').map(Number);
+                if (selectedHour <= currentHourPST) {
+                    timeSelect.value = '';
+                }
+            }
         }
 
         function prevMonth() {
