@@ -1296,11 +1296,6 @@
                             </div>
                             
                             <div class="input-group">
-                                <label for="passengerEmail">Email address</label>
-                                <input type="email" id="passengerEmail" name="passengerEmail" required placeholder="Enter your email">
-                            </div>
-                            
-                            <div class="input-group">
                                 <label for="specialRequests">Notes about conditions <span class="optional">(Optional)</span></label>
                                 <textarea id="specialRequests" name="specialRequests" placeholder="Questions about weather conditions or route preferences"></textarea>
                             </div>
@@ -1920,7 +1915,6 @@
             }
 
             const name = document.getElementById('passengerName').value;
-            const email = document.getElementById('passengerEmail').value;
             const specialRequests = document.getElementById('specialRequests').value;
             
             const subject = encodeURIComponent('Flight Planning Suggestion - Darelines');
@@ -1928,7 +1922,6 @@
 Flight planning suggestion received:
 
 From: ${name}
-Email: ${email}
 Suggested Date: ${window.selectedDate}
 Suggested Time: ${selectedTime}
 Route Suggestion: ${destinations[selectedFlight].name}
