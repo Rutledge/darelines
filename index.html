@@ -784,10 +784,16 @@
         }
 
         .phx-image {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .phx-image:hover {
+            transform: scale(1.05);
         }
 
         .phx-message h3 {
@@ -1075,10 +1081,10 @@
         <div class="disclaimer-dialog">
             <div class="phx-section">
                 <div class="phx-photo">
-                    <img src="phx-photo.jpg" alt="PHX" class="phx-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjBmMGYwIiByeD0iNTAiLz4KPHN2ZyB4PSIyNSIgeT0iMjUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+Cjx0ZXh0IHg9IjI1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5CPPC90ZXh0Pgo8L3N2Zz4KPC9zdmc='" />
+                    <img src="phx-photo.jpg" alt="PHX" class="phx-image" onclick="phxClick()" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjBmMGYwIiByeD0iNTAiLz4KPHN2ZyB4PSIyNSIgeT0iMjUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+Cjx0ZXh0IHg9IjI1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5CPPC90ZXh0Pgo8L3N2Zz4KPC9zdmc='" />
                 </div>
                 <div class="phx-message">
-                    <h3>🐕 Meet PHX</h3>
+                    <h3>🐕 PHX - Guard Dog</h3>
                     <p>"Woof! This is <strong>NOT a commercial airline, charter service, or booking system.</strong> It's just an easy way to coordinate availability with weather info from close friends and family to find a good time to fly together!"</p>
                 </div>
             </div>
@@ -1397,6 +1403,28 @@
             document.getElementById('disclaimerOverlay').style.display = 'none';
             document.getElementById('mainContainer').style.display = 'block';
             initializeDatePicker();
+        }
+
+        function phxClick() {
+            const phxMessages = [
+                "Woof! Remember, this is just for coordinating with friends!",
+                "Good boy! You clicked the guard dog! 🐕",
+                "PHX here - keeping everyone safe and legal!",
+                "Woof woof! Just making sure you understand the rules!",
+                "Guard dog on duty - protecting against FAA violations!"
+            ];
+            const randomMessage = phxMessages[Math.floor(Math.random() * phxMessages.length)];
+            
+            // Temporarily show the message
+            const messageElement = document.querySelector('.phx-message p');
+            const originalMessage = messageElement.innerHTML;
+            messageElement.innerHTML = `"${randomMessage}"`;
+            messageElement.style.color = '#1a73e8';
+            
+            setTimeout(() => {
+                messageElement.innerHTML = originalMessage;
+                messageElement.style.color = '';
+            }, 2000);
         }
         
         const weatherMinimums = {
