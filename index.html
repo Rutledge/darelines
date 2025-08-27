@@ -207,16 +207,15 @@
         .custom-calendar {
             display: none;
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             left: 0;
-            right: 0;
-            z-index: 1000;
+            z-index: 9999;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.2);
-            border: 1px solid rgba(50, 130, 184, 0.1);
-            margin-top: 8px;
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.3);
+            border: 1px solid rgba(50, 130, 184, 0.15);
             padding: 20px;
+            min-width: 320px;
             max-width: 350px;
         }
 
@@ -344,6 +343,8 @@
             margin-bottom: 35px;
             box-shadow: 0 10px 40px rgba(15, 76, 117, 0.1);
             border: 1px solid rgba(50, 130, 184, 0.1);
+            position: relative;
+            z-index: 1;
         }
 
         .flights-header {
