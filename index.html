@@ -1065,7 +1065,6 @@
 <body>
     <div class="login-container" id="loginContainer">
         <h1>Darelines</h1>
-        <p>Access for close friends and family</p>
         <input type="password" class="password-input" id="passwordInput" placeholder="Enter access code" onkeypress="if(event.key === 'Enter') checkPassword()">
         <button class="submit-btn" onclick="checkPassword()">Enter</button>
         <div class="error-message" id="errorMessage">Access code incorrect. Please try again.</div>
@@ -1111,7 +1110,7 @@
         <div class="content">
             <!-- Search/Calendar Section -->
             <div class="search-container">
-                <h2>Check weather for potential flight dates</h2>
+                <h2>Planned flights - check if you want to join</h2>
                 <div class="search-form">
                     <div class="search-field">
                         <label for="flightDate">Departure Date</label>
@@ -1311,7 +1310,7 @@
 
                     <!-- Passenger Form -->
                     <div class="passenger-form">
-                        <h3>Help with weather checking</h3>
+                        <h3>Send weather planning suggestion</h3>
                         <form class="booking-form" onsubmit="submitBooking(event)">
                             <div class="input-group">
                                 <label for="passengerName">First and last name</label>
@@ -1329,7 +1328,7 @@
                             </div>
                             
                             <button type="submit" class="booking-submit-btn">
-                                Request weather briefing help
+                                Send planning suggestion
                             </button>
                         </form>
                     </div>
@@ -1938,19 +1937,19 @@
             const email = document.getElementById('passengerEmail').value;
             const specialRequests = document.getElementById('specialRequests').value;
             
-            const subject = encodeURIComponent('Weather Check Help Request - Darelines');
+            const subject = encodeURIComponent('Flight Planning Suggestion - Darelines');
             const body = encodeURIComponent(`
-Weather checking assistance requested:
+Flight planning suggestion received:
 
 From: ${name}
 Email: ${email}
-Date: ${window.selectedDate}
-Time: ${selectedTime}
-Route Interest: ${destinations[selectedFlight].name}
+Suggested Date: ${window.selectedDate}
+Suggested Time: ${selectedTime}
+Route Suggestion: ${destinations[selectedFlight].name}
 Destination: ${destinations[selectedFlight].route}
 Notes: ${specialRequests || 'None'}
 
-Someone would like help checking conditions for this route/time. This is just a weather checking convenience tool.
+Someone is suggesting this route/time for potential weather planning. This is your personal flight planning tool.
 Please confirm final availability and conduct weather briefing.
 
 Best regards,
