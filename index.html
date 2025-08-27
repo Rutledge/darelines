@@ -1085,17 +1085,17 @@
             </div>
             
             <div class="disclaimer-content">
-                <p><strong>This is NOT a commercial airline, charter service, or actual booking system.</strong></p>
-                <p>Darelines is a personal coordination tool for friends and family. This is purely for entertainment and coordination of personal flights between people who already know each other.</p>
+                <p><strong>This is NOT a commercial airline, charter service, or booking system.</strong></p>
+                <p>Darelines is primarily a personal weather checking convenience tool. It helps the pilot check conditions for different routes and times. Any coordination aspects are purely between people who already know each other.</p>
                 <ul>
-                    <li>✈️ Personal aircraft - no commercial operations</li>
-                    <li>👥 Friends & family coordination only</li>
+                    <li>🌤️ Weather checking convenience tool</li>
+                    <li>✈️ Personal flight planning assistance</li>
+                    <li>👥 Friends & family only</li>
                     <li>🎮 Entertainment and simulation purposes</li>
-                    <li>💸 No payments, no business transactions</li>
-                    <li>📋 Not holding out to the public</li>
+                    <li>💸 No payments, no commercial services</li>
                 </ul>
                 <p class="risk-notice">
-                    <strong>Important:</strong> Any actual flights are personal arrangements between friends, not commercial services. This site is just a fun coordination tool.
+                    <strong>Important:</strong> This is just a weather checking tool that makes it convenient for the pilot to see conditions. Any flights are personal arrangements between friends.
                 </p>
             </div>
             <button class="disclaimer-btn" onclick="acceptDisclaimer()">I understand and agree - Continue to Darelines</button>
@@ -1105,13 +1105,13 @@
     <div class="main-container" id="mainContainer">
         <header>
             <h1>✈️ Darelines</h1>
-            <p>Friends & Family Flight Coordination • Entertainment Only</p>
+            <p>Personal Weather Checking Tool • Flight Planning Convenience</p>
         </header>
 
         <div class="content">
             <!-- Search/Calendar Section -->
             <div class="search-container">
-                <h2>When would you like to coordinate a flight?</h2>
+                <h2>Check weather for potential flight dates</h2>
                 <div class="search-form">
                     <div class="search-field">
                         <label for="flightDate">Departure Date</label>
@@ -1144,7 +1144,7 @@
                         </select>
                     </div>
                     <button class="search-btn" id="searchFlights" onclick="searchFlights()" disabled>
-                        Check Availability
+                        Check Weather Conditions
                     </button>
                 </div>
             </div>
@@ -1152,8 +1152,8 @@
             <!-- Flight Options Section -->
             <div class="flights-container" id="flightsContainer">
                 <div class="flights-header">
-                    <h2>Flight Ideas & Coordination</h2>
-                    <p>Weather conditions for potential flights with friends</p>
+                    <h2>Weather Check Results</h2>
+                    <p>Conditions for different route options - helps with flight planning</p>
                 </div>
                 
                 <div class="flights-table">
@@ -1311,7 +1311,7 @@
 
                     <!-- Passenger Form -->
                     <div class="passenger-form">
-                        <h3>Let me know you're interested</h3>
+                        <h3>Help with weather checking</h3>
                         <form class="booking-form" onsubmit="submitBooking(event)">
                             <div class="input-group">
                                 <label for="passengerName">First and last name</label>
@@ -1324,12 +1324,12 @@
                             </div>
                             
                             <div class="input-group">
-                                <label for="specialRequests">Questions or notes <span class="optional">(Optional)</span></label>
-                                <textarea id="specialRequests" name="specialRequests" placeholder="Any questions about the flight or special requests"></textarea>
+                                <label for="specialRequests">Notes about conditions <span class="optional">(Optional)</span></label>
+                                <textarea id="specialRequests" name="specialRequests" placeholder="Questions about weather conditions or route preferences"></textarea>
                             </div>
                             
                             <button type="submit" class="booking-submit-btn">
-                                Send coordination request
+                                Request weather briefing help
                             </button>
                         </form>
                     </div>
@@ -1938,19 +1938,19 @@
             const email = document.getElementById('passengerEmail').value;
             const specialRequests = document.getElementById('specialRequests').value;
             
-            const subject = encodeURIComponent('Friend Flight Coordination - Darelines');
+            const subject = encodeURIComponent('Weather Check Help Request - Darelines');
             const body = encodeURIComponent(`
-Hey! Someone is interested in coordinating a flight:
+Weather checking assistance requested:
 
-Friend: ${name}
+From: ${name}
 Email: ${email}
-Preferred Date: ${window.selectedDate}
+Date: ${window.selectedDate}
 Time: ${selectedTime}
-Flight Idea: ${destinations[selectedFlight].name}
-Route: ${destinations[selectedFlight].route}
+Route Interest: ${destinations[selectedFlight].name}
+Destination: ${destinations[selectedFlight].route}
 Notes: ${specialRequests || 'None'}
 
-This is just coordination between friends - no commercial booking!
+Someone would like help checking conditions for this route/time. This is just a weather checking convenience tool.
 Please confirm final availability and conduct weather briefing.
 
 Best regards,
