@@ -447,83 +447,88 @@
         .status-indicator {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
             font-weight: 500;
             transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
         }
 
         .status-indicator:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-decoration: underline;
         }
 
-        .plane-available {
-            background: rgba(76, 175, 80, 0.1);
-            color: #2e7d32;
-            border: 1px solid rgba(76, 175, 80, 0.3);
+        .weather-value {
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 1.05em;
         }
 
-        .plane-unavailable {
-            background: rgba(244, 67, 54, 0.1);
-            color: #c62828;
-            border: 1px solid rgba(244, 67, 54, 0.3);
+        .weather-label {
+            color: #5f6368;
+            font-size: 0.9em;
         }
 
-        .plane-checking {
-            background: rgba(96, 125, 139, 0.1);
-            color: #546e7a;
-            border: 1px solid rgba(96, 125, 139, 0.3);
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
         }
 
         .wind-good {
-            background: rgba(76, 175, 80, 0.1);
-            color: #2e7d32;
-            border: 1px solid rgba(76, 175, 80, 0.3);
+            background: rgba(52, 168, 83, 0.08);
+            color: #188038;
+        }
+
+        .wind-good .weather-label {
+            color: #188038;
         }
 
         .wind-caution {
-            background: rgba(255, 193, 7, 0.1);
-            color: #f57c00;
-            border: 1px solid rgba(255, 193, 7, 0.3);
+            background: rgba(251, 188, 4, 0.08);
+            color: #ea8600;
+        }
+
+        .wind-caution .weather-label {
+            color: #ea8600;
         }
 
         .wind-bad {
-            background: rgba(244, 67, 54, 0.1);
-            color: #c62828;
-            border: 1px solid rgba(244, 67, 54, 0.3);
+            background: rgba(234, 67, 53, 0.08);
+            color: #d33b27;
+        }
+
+        .wind-bad .weather-label {
+            color: #d33b27;
         }
 
         .wind-checking {
-            background: rgba(96, 125, 139, 0.1);
-            color: #546e7a;
-            border: 1px solid rgba(96, 125, 139, 0.3);
+            background: rgba(96, 125, 139, 0.08);
+            color: #5f6368;
         }
 
         .clouds-clear {
-            background: rgba(76, 175, 80, 0.1);
-            color: #2e7d32;
-            border: 1px solid rgba(76, 175, 80, 0.3);
+            background: transparent;
+            color: #188038;
         }
 
         .clouds-scattered {
-            background: rgba(255, 193, 7, 0.1);
-            color: #f57c00;
-            border: 1px solid rgba(255, 193, 7, 0.3);
+            background: transparent;
+            color: #ea8600;
         }
 
         .clouds-overcast {
-            background: rgba(244, 67, 54, 0.1);
-            color: #c62828;
-            border: 1px solid rgba(244, 67, 54, 0.3);
+            background: transparent;
+            color: #5f6368;
         }
 
         .clouds-checking {
-            background: rgba(96, 125, 139, 0.1);
-            color: #546e7a;
-            border: 1px solid rgba(96, 125, 139, 0.3);
+            background: transparent;
+            color: #5f6368;
         }
 
         .select-flight-btn {
@@ -859,12 +864,15 @@
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-bay-tour">
-                                <span class="loading-dots">Checking</span>
+                                <div class="weather-info">
+                                    <span class="weather-value">--</span>
+                                    <span class="weather-label">checking</span>
+                                </div>
                             </div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator clouds-checking" id="clouds-bay-tour">
-                                <span class="loading-dots">Checking</span>
+                                -- checking
                             </div>
                         </div>
                         <div class="status-column">
@@ -883,12 +891,15 @@
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-monterey">
-                                <span class="loading-dots">Checking</span>
+                                <div class="weather-info">
+                                    <span class="weather-value">--</span>
+                                    <span class="weather-label">checking</span>
+                                </div>
                             </div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator clouds-checking" id="clouds-monterey">
-                                <span class="loading-dots">Checking</span>
+                                -- checking
                             </div>
                         </div>
                         <div class="status-column">
@@ -908,12 +919,15 @@
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-napa-valley">
-                                <span class="loading-dots">Checking</span>
+                                <div class="weather-info">
+                                    <span class="weather-value">--</span>
+                                    <span class="weather-label">checking</span>
+                                </div>
                             </div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator clouds-checking" id="clouds-napa-valley">
-                                <span class="loading-dots">Checking</span>
+                                -- checking
                             </div>
                         </div>
                         <div class="status-column">
@@ -1410,24 +1424,25 @@
             // Update wind status
             const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
             
-            let windStatus, windClass, windIcon;
+            let windClass, windLabel;
             if (windSpeedKnots <= 8) {
-                windStatus = 'Good';
                 windClass = 'wind-good';
-                windIcon = '✅';
+                windLabel = 'ideal conditions';
             } else if (windSpeedKnots <= 15) {
-                windStatus = 'Caution';
                 windClass = 'wind-caution';
-                windIcon = '⚠️';
+                windLabel = 'moderate winds';
             } else {
-                windStatus = 'Too Strong';
                 windClass = 'wind-bad';
-                windIcon = '❌';
+                windLabel = 'strong winds';
             }
             
             windElement.className = `status-indicator ${windClass}`;
-            windElement.innerHTML = `${windIcon} ${windSpeedKnots}kt${gustSpeed && gustSpeed > windSpeedKnots ? ` G${gustSpeed}kt` : ''}`;
-            windElement.style.cursor = 'pointer';
+            windElement.innerHTML = `
+                <div class="weather-info">
+                    <span class="weather-value">${windSpeedKnots} kt${gustSpeed && gustSpeed > windSpeedKnots ? ` G${gustSpeed}` : ''}</span>
+                    <span class="weather-label">${windLabel}</span>
+                </div>
+            `;
             windElement.title = `Click to view ${airportCode} forecast`;
             windElement.onclick = (e) => {
                 e.stopPropagation();
@@ -1437,11 +1452,11 @@
             // Update clouds status
             let cloudsStatus, cloudsClass, cloudsIcon;
             if (totalCloudCover <= 25) {
-                cloudsStatus = 'Clear';
+                cloudsStatus = 'Clear skies';
                 cloudsClass = 'clouds-clear';
                 cloudsIcon = '☀️';
             } else if (totalCloudCover <= 75) {
-                cloudsStatus = 'Scattered';
+                cloudsStatus = 'Partly cloudy';
                 cloudsClass = 'clouds-scattered';
                 cloudsIcon = '⛅';
             } else {
@@ -1452,8 +1467,7 @@
             
             cloudsElement.className = `status-indicator ${cloudsClass}`;
             cloudsElement.innerHTML = `${cloudsIcon} ${cloudsStatus}`;
-            cloudsElement.style.cursor = 'pointer';
-            cloudsElement.title = `Click to view ${airportCode} forecast`;
+            cloudsElement.title = `${Math.round(totalCloudCover)}% cloud coverage`;
             cloudsElement.onclick = (e) => {
                 e.stopPropagation();
                 window.open(forecastUrl, '_blank');
@@ -1465,18 +1479,21 @@
             const cloudsElement = document.getElementById(`clouds-${tripId}`);
             const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
             
-            windElement.className = 'status-indicator wind-good';
-            windElement.innerHTML = '🌤️ Check Forecast';
-            windElement.style.cursor = 'pointer';
+            windElement.className = 'status-indicator wind-checking';
+            windElement.innerHTML = `
+                <div class="weather-info">
+                    <span class="weather-value">--</span>
+                    <span class="weather-label">checking winds</span>
+                </div>
+            `;
             windElement.title = `Click to view ${airportCode} forecast`;
             windElement.onclick = (e) => {
                 e.stopPropagation();
                 window.open(forecastUrl, '_blank');
             };
             
-            cloudsElement.className = 'status-indicator clouds-clear';
-            cloudsElement.innerHTML = '☁️ Check Forecast';
-            cloudsElement.style.cursor = 'pointer';
+            cloudsElement.className = 'status-indicator clouds-checking';
+            cloudsElement.innerHTML = '-- checking clouds';
             cloudsElement.title = `Click to view ${airportCode} forecast`;
             cloudsElement.onclick = (e) => {
                 e.stopPropagation();
