@@ -1,9 +1,9 @@
 # CLAUDE.md
 
-## Project: Darelines Flight Booking System
+## Project: Darelines
 
 ### Overview
-Private aviation flight booking website for RV-12iS aircraft based at San Carlos Airport (KSQL). Features real-time weather integration, Google Flights-style interface, and secure deployment.
+Personal weather checking tool for RV-12iS aircraft based at San Carlos Airport (KSQL). Features real-time weather integration, Google Flights-style interface, and secure deployment. Primarily a convenience tool for flight planning and weather checking.
 
 ### Tech Stack
 - Single HTML file with embedded CSS/JavaScript
