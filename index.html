@@ -904,6 +904,7 @@
 
     <script>
         const WINDY_API_KEY = '{{WINDY_API_KEY}}';
+        const SITE_PASSWORD = '{{SITE_PASSWORD}}';
         
         const weatherMinimums = {
             windSpeed: 15,
@@ -924,7 +925,7 @@
 
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
-            if (password === 'flyWithMe2024') {
+            if (password === SITE_PASSWORD) {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('mainContainer').style.display = 'block';
                 initializeDatePicker();
