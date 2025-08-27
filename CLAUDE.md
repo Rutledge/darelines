@@ -41,3 +41,11 @@ npm run dev      # Build and start local server on port 3000
 - Integrated real Windy API with proper error handling
 - Fixed calendar overlay z-index issues
 - Removed plane availability column per user request
+- Added PHX disclaimer dialog with entertainment-only message
+- Changed password from "dare2fly" to "puppy"
+
+### PHX Photo Setup
+To add PHX's actual photo to the disclaimer dialog:
+1. Save PHX's photo as `phx-photo.jpg` in the project root directory
+2. The image will automatically be displayed as a circular 80x80px photo
+3. If the photo doesn't load, it falls back to a dog emoji placeholder
