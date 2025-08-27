@@ -1048,6 +1048,19 @@
         console.log('API Key length:', WINDY_API_KEY.length);
         console.log('API Key starts with:', WINDY_API_KEY.substring(0, 5));
         
+        // Password check function (needs to be defined early for inline event handler)
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === SITE_PASSWORD) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                initializeDatePicker();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+        
         const weatherMinimums = {
             windSpeed: 15,
             visibility: 5,
@@ -1062,20 +1075,7 @@
         };
 
         let selectedFlight = null;
-        let selectedDate = null;
         let selectedTime = null;
-
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === SITE_PASSWORD) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-                initializeDatePicker();
-            } else {
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-            }
-        }
 
         let currentCalendarDate = new Date();
         let selectedDate = null;
@@ -1095,8 +1095,8 @@
             maxBookingDate = new Date();
             maxBookingDate.setDate(today.getDate() + 14);
 
-            // Set current calendar to minimum date month
-            currentCalendarDate = new Date(minBookingDate);
+            // Set current calendar to today's month
+            currentCalendarDate = new Date(today.getFullYear(), today.getMonth(), 1);
             
             // Set default selected date
             selectedDate = new Date(minBookingDate);
