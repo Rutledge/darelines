@@ -378,7 +378,7 @@
             background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
             color: white;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            grid-template-columns: 2.5fr 1fr 1fr 120px;
             padding: 20px 30px;
             font-weight: 600;
             font-size: 1.05em;
@@ -387,7 +387,7 @@
 
         .flight-row {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            grid-template-columns: 2.5fr 1fr 1fr 120px;
             padding: 25px 30px;
             align-items: center;
             border-bottom: 1px solid rgba(50, 130, 184, 0.1);
@@ -837,13 +837,12 @@
             <div class="flights-container" id="flightsContainer">
                 <div class="flights-header">
                     <h2>Available Darelines Flights</h2>
-                    <p>Real-time aircraft availability and weather conditions for your selected date/time</p>
+                    <p>Real-time weather conditions for your selected date/time</p>
                 </div>
                 
                 <div class="flights-table">
                     <div class="flights-header-row">
                         <div>Route</div>
-                        <div>Plane Available</div>
                         <div>Wind Check</div>
                         <div>Clouds</div>
                         <div>Select</div>
@@ -856,11 +855,6 @@
                                 <h3>Bay Tour</h3>
                                 <p>Golden Gate Bridge, Alcatraz, SF Skyline</p>
                                 <div class="route-time">1.5 hours • San Carlos ↔ Bay Area</div>
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <div class="status-indicator plane-checking" id="plane-bay-tour">
-                                <span class="loading-dots">Checking</span>
                             </div>
                         </div>
                         <div class="status-column">
@@ -885,11 +879,6 @@
                                 <h3>Monterey Bay</h3>
                                 <p>Coastal flight down Highway 1, lunch at MRY</p>
                                 <div class="route-time">2.5 hours • San Carlos → Monterey</div>
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <div class="status-indicator plane-checking" id="plane-monterey">
-                                <span class="loading-dots">Checking</span>
                             </div>
                         </div>
                         <div class="status-column">
@@ -918,11 +907,6 @@
                             </div>
                         </div>
                         <div class="status-column">
-                            <div class="status-indicator plane-checking" id="plane-napa-valley">
-                                <span class="loading-dots">Checking</span>
-                            </div>
-                        </div>
-                        <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-napa-valley">
                                 <span class="loading-dots">Checking</span>
                             </div>
@@ -945,11 +929,6 @@
                                 <h3>Custom Flight</h3>
                                 <p>Your choice of destination</p>
                                 <div class="route-time">Variable • San Carlos → Your Choice</div>
-                            </div>
-                        </div>
-                        <div class="status-column">
-                            <div class="status-indicator plane-available">
-                                ✅ Available
                             </div>
                         </div>
                         <div class="status-column">
@@ -1342,36 +1321,12 @@
                 const destinationAirport = airports[airports.length - 1];
                 
                 setTimeout(async () => {
-                    // Check aircraft availability (simulated)
-                    const planeAvailable = await checkPlaneAvailability(tripId, flightDateTime);
-                    updatePlaneStatus(tripId, planeAvailable);
-                    
                     // Fetch real weather data from Windy API
                     await fetchWindyWeather(tripId, destinationAirport);
                 }, 300 + (index * 600));
             });
         }
 
-        async function checkPlaneAvailability(tripId, flightDateTime) {
-            // Simulate aircraft availability check
-            // In real implementation, this would check calendar/scheduling system
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            // Random availability for demo - in real app, check actual calendar
-            return Math.random() > 0.2; // 80% availability rate
-        }
-
-        function updatePlaneStatus(tripId, available) {
-            const element = document.getElementById(`plane-${tripId}`);
-            
-            if (available) {
-                element.className = 'status-indicator plane-available';
-                element.innerHTML = '✅ Available';
-            } else {
-                element.className = 'status-indicator plane-unavailable';
-                element.innerHTML = '❌ Booked';
-            }
-        }
 
 
         async function fetchWindyWeather(tripId, airportCode) {
