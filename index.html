@@ -768,6 +768,41 @@
             text-align: center;
         }
 
+        .phx-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px solid #e8eaed;
+        }
+
+        .phx-photo {
+            flex-shrink: 0;
+        }
+
+        .phx-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .phx-message h3 {
+            margin: 0 0 8px 0;
+            color: #202124;
+            font-size: 18px;
+        }
+
+        .phx-message p {
+            margin: 0;
+            color: #5f6368;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
         .disclaimer-content {
             color: #202124;
             line-height: 1.5;
@@ -1039,7 +1074,16 @@
     <!-- Disclaimer Dialog -->
     <div class="disclaimer-overlay" id="disclaimerOverlay">
         <div class="disclaimer-dialog">
-            <h2>⚠️ Important Notice</h2>
+            <div class="phx-section">
+                <div class="phx-photo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjBmMGYwIiByeD0iNTAiLz4KPHN2ZyB4PSIyNSIgeT0iMjUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+Cjx0ZXh0IHg9IjI1IiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn5CPPC90ZXh0Pgo8L3N2Zz4KPC9zdmc+" alt="PHX" class="phx-image" />
+                </div>
+                <div class="phx-message">
+                    <h3>🐕 Meet PHX</h3>
+                    <p>"Woof! I want to make sure you understand this is <strong>not a commercial or charter airline</strong> and this site is only for <strong>entertainment purposes</strong>!"</p>
+                </div>
+            </div>
+            
             <div class="disclaimer-content">
                 <p><strong>This is NOT a commercial airline or charter service.</strong></p>
                 <p>Darelines is a private, personal website for sharing flights with friends in a personally-owned aircraft. This is not a business operation.</p>
@@ -1048,12 +1092,13 @@
                     <li>🛡️ Recreational flights only</li>
                     <li>👥 Invitation-only for trusted friends</li>
                     <li>📋 Not subject to commercial aviation regulations</li>
+                    <li>🎮 Entertainment purposes only</li>
                 </ul>
                 <p class="risk-notice">
                     <strong>Risk Notice:</strong> General aviation carries inherent risks. By proceeding, you acknowledge you understand the risks involved in private aircraft operations.
                 </p>
             </div>
-            <button class="disclaimer-btn" onclick="acceptDisclaimer()">I Understand - Continue to Darelines</button>
+            <button class="disclaimer-btn" onclick="acceptDisclaimer()">PHX approves - Continue to Darelines</button>
         </div>
     </div>
 
