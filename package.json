@@ -1,0 +1,16 @@
+{
+  "name": "darelines",
+  "version": "1.0.0",
+  "description": "Private aviation flight booking system for RV-12iS aircraft",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && python3 -m http.server 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rutledge/darelines.git"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
+}
