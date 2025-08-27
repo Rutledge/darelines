@@ -1085,7 +1085,7 @@
                 const data = await response.json();
                 console.log(`Windy API response for ${airportCode}:`, data);
                 
-                if (data && data.wind_u && data.wind_v) {
+                if (data && data['wind_u-surface'] && data['wind_v-surface']) {
                     updateWeatherFromWindyData(tripId, airportCode, data);
                 } else {
                     console.error('Invalid Windy API response:', data);
@@ -1113,18 +1113,18 @@
             const cloudsElement = document.getElementById(`clouds-${tripId}`);
             
             // Calculate wind speed from u/v components (first data point)
-            const windU = data.wind_u[0];
-            const windV = data.wind_v[0];
+            const windU = data['wind_u-surface'][0];
+            const windV = data['wind_v-surface'][0];
             const windSpeed = Math.sqrt(windU * windU + windV * windV);
             const windSpeedKnots = Math.round(windSpeed * 1.944); // Convert m/s to knots
             
             // Get gust and cloud data
-            const gustSpeed = data.windGust ? Math.round(data.windGust[0] * 1.944) : null;
+            const gustSpeed = data['gust-surface'] ? Math.round(data['gust-surface'][0] * 1.944) : null;
             
             // Calculate total cloud coverage from low/medium/high clouds
-            const lowClouds = data.lclouds ? data.lclouds[0] : 0;
-            const midClouds = data.mclouds ? data.mclouds[0] : 0;
-            const highClouds = data.hclouds ? data.hclouds[0] : 0;
+            const lowClouds = data['lclouds-surface'] ? data['lclouds-surface'][0] : 0;
+            const midClouds = data['mclouds-surface'] ? data['mclouds-surface'][0] : 0;
+            const highClouds = data['hclouds-surface'] ? data['hclouds-surface'][0] : 0;
             const totalCloudCover = Math.max(lowClouds, midClouds, highClouds); // Use highest layer
             
             console.log(`${airportCode} Weather:`, {
