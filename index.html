@@ -1471,7 +1471,7 @@
             }
             
             windElement.className = `status-indicator ${windClass}`;
-            windElement.innerHTML = `${windIcon} ${windSpeedKnots}kt${gustSpeed && gustSpeed > windSpeedKnots + 5 ? ` G${gustSpeed}` : ''}`;
+            windElement.innerHTML = `${windIcon} ${windSpeedKnots}kt${gustSpeed && gustSpeed > windSpeedKnots ? ` G${gustSpeed}kt` : ''}`;
             windElement.style.cursor = 'pointer';
             windElement.title = `Click to view ${airportCode} forecast`;
             windElement.onclick = (e) => {
