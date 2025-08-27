@@ -1559,7 +1559,12 @@
             renderCalendar();
         }
         
+        
         function updateFlightTimes(selectedTime) {
+            // Convert "Morning" to 10:00 AM
+            if (selectedTime === "Morning") {
+                selectedTime = "10:00";
+            }
             if (!selectedTime) return;
             
             const [hours, minutes] = selectedTime.split(':').map(Number);
@@ -1572,13 +1577,13 @@
             document.getElementById('time-bay-tour').textContent = 
                 `${formatTime(startTime)} – ${formatTime(bayEnd)}`;
             
-            // Monterey - 30 min flight + 1 hr stop + 30 min return = 2 hours total
+            // Monterey - 2 hour flight
             const mryEnd = new Date(startTime);
             mryEnd.setMinutes(mryEnd.getMinutes() + 120);
             document.getElementById('time-monterey').textContent = 
                 `${formatTime(startTime)} – ${formatTime(mryEnd)}`;
             
-            // Sonoma - 25 min flight + 45 min stop + 25 min return = 1.5 hours
+            // Sonoma - 1.5 hour flight
             const sonomaEnd = new Date(startTime);
             sonomaEnd.setMinutes(sonomaEnd.getMinutes() + 90);
             document.getElementById('time-sonoma').textContent = 
@@ -1598,6 +1603,8 @@
         function searchFlights() {
             const dateInput = document.getElementById('flightDate').value;
             selectedTime = document.getElementById('flightTime').value;
+            
+            updateFlightTimes(selectedTime);
 
             if (!dateInput || !selectedTime) {
                 alert('Please select both date and time.');
