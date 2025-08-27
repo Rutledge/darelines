@@ -1085,17 +1085,17 @@
             </div>
             
             <div class="disclaimer-content">
-                <p><strong>This is NOT a commercial airline or charter service.</strong></p>
-                <p>Darelines is a private, personal website for sharing flights with friends in a personally-owned aircraft. This is not a business operation.</p>
+                <p><strong>This is NOT a commercial airline, charter service, or actual booking system.</strong></p>
+                <p>Darelines is a personal coordination tool for friends and family. This is purely for entertainment and coordination of personal flights between people who already know each other.</p>
                 <ul>
-                    <li>✈️ Private RV-12iS aircraft (N962TF)</li>
-                    <li>🛡️ Recreational flights only</li>
-                    <li>👥 Invitation-only for trusted friends</li>
-                    <li>📋 Not subject to commercial aviation regulations</li>
-                    <li>🎮 Entertainment purposes only</li>
+                    <li>✈️ Personal aircraft - no commercial operations</li>
+                    <li>👥 Friends & family coordination only</li>
+                    <li>🎮 Entertainment and simulation purposes</li>
+                    <li>💸 No payments, no business transactions</li>
+                    <li>📋 Not holding out to the public</li>
                 </ul>
                 <p class="risk-notice">
-                    <strong>Risk Notice:</strong> General aviation carries inherent risks. By proceeding, you acknowledge you understand the risks involved in private aircraft operations.
+                    <strong>Important:</strong> Any actual flights are personal arrangements between friends, not commercial services. This site is just a fun coordination tool.
                 </p>
             </div>
             <button class="disclaimer-btn" onclick="acceptDisclaimer()">I understand and agree - Continue to Darelines</button>
@@ -1105,13 +1105,13 @@
     <div class="main-container" id="mainContainer">
         <header>
             <h1>✈️ Darelines</h1>
-            <p>Private Aviation • RV-12iS • San Carlos Airport</p>
+            <p>Friends & Family Flight Coordination • Entertainment Only</p>
         </header>
 
         <div class="content">
             <!-- Search/Calendar Section -->
             <div class="search-container">
-                <h2>When would you like to fly?</h2>
+                <h2>When would you like to coordinate a flight?</h2>
                 <div class="search-form">
                     <div class="search-field">
                         <label for="flightDate">Departure Date</label>
@@ -1144,7 +1144,7 @@
                         </select>
                     </div>
                     <button class="search-btn" id="searchFlights" onclick="searchFlights()" disabled>
-                        Search Flights
+                        Check Availability
                     </button>
                 </div>
             </div>
@@ -1152,8 +1152,8 @@
             <!-- Flight Options Section -->
             <div class="flights-container" id="flightsContainer">
                 <div class="flights-header">
-                    <h2>Available Darelines Flights</h2>
-                    <p>Real-time weather conditions for your selected date/time</p>
+                    <h2>Flight Ideas & Coordination</h2>
+                    <p>Weather conditions for potential flights with friends</p>
                 </div>
                 
                 <div class="flights-table">
@@ -1311,7 +1311,7 @@
 
                     <!-- Passenger Form -->
                     <div class="passenger-form">
-                        <h3>Contact information</h3>
+                        <h3>Let me know you're interested</h3>
                         <form class="booking-form" onsubmit="submitBooking(event)">
                             <div class="input-group">
                                 <label for="passengerName">First and last name</label>
@@ -1324,12 +1324,12 @@
                             </div>
                             
                             <div class="input-group">
-                                <label for="specialRequests">Special requests <span class="optional">(Optional)</span></label>
-                                <textarea id="specialRequests" name="specialRequests" placeholder="Dietary restrictions, questions, or special requests"></textarea>
+                                <label for="specialRequests">Questions or notes <span class="optional">(Optional)</span></label>
+                                <textarea id="specialRequests" name="specialRequests" placeholder="Any questions about the flight or special requests"></textarea>
                             </div>
                             
                             <button type="submit" class="booking-submit-btn">
-                                Request Darelines flight
+                                Send coordination request
                             </button>
                         </form>
                     </div>
@@ -1938,19 +1938,19 @@
             const email = document.getElementById('passengerEmail').value;
             const specialRequests = document.getElementById('specialRequests').value;
             
-            const subject = encodeURIComponent('Darelines Flight Booking Request');
+            const subject = encodeURIComponent('Friend Flight Coordination - Darelines');
             const body = encodeURIComponent(`
-Darelines Flight Booking Request:
+Hey! Someone is interested in coordinating a flight:
 
-Passenger: ${name}
+Friend: ${name}
 Email: ${email}
-Date: ${window.selectedDate}
-Departure Time: ${selectedTime}
-Flight Choice: ${destinations[selectedFlight].name}
+Preferred Date: ${window.selectedDate}
+Time: ${selectedTime}
+Flight Idea: ${destinations[selectedFlight].name}
 Route: ${destinations[selectedFlight].route}
-Special Requests: ${specialRequests || 'None'}
+Notes: ${specialRequests || 'None'}
 
-Aircraft availability and weather forecast checked for selected date/time.
+This is just coordination between friends - no commercial booking!
 Please confirm final availability and conduct weather briefing.
 
 Best regards,
