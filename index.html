@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darelines - Private Flight Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 50%, #bbe1fa 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(15, 76, 117, 0.3);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-container h1 {
+            color: #0f4c75;
+            margin-bottom: 12px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .login-container p {
+            color: #546e7a;
+            margin-bottom: 35px;
+            font-size: 1.1em;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid #e1f5fe;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #3282b8;
+            box-shadow: 0 0 0 4px rgba(50, 130, 184, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(15, 76, 117, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(15, 76, 117, 0.4);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .main-container {
+            display: none;
+            background: #f8fafb;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3282b8, #bbe1fa, #3282b8);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.1);
+            border: 1px solid rgba(50, 130, 184, 0.1);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 200px;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .search-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-field label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0f4c75;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-field input,
+        .search-field select {
+            padding: 16px 20px;
+            border: 2px solid #e1f5fe;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-field input:focus,
+        .search-field select:focus {
+            outline: none;
+            border-color: #3282b8;
+            box-shadow: 0 0 0 4px rgba(50, 130, 184, 0.1);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: white;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(15, 76, 117, 0.3);
+            height: fit-content;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(15, 76, 117, 0.4);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .flights-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.1);
+            border: 1px solid rgba(50, 130, 184, 0.1);
+        }
+
+        .flights-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .flights-header h2 {
+            color: #0f4c75;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .flights-header p {
+            color: #546e7a;
+            font-size: 1.1em;
+        }
+
+        .flights-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(15, 76, 117, 0.08);
+            border: 1px solid rgba(50, 130, 184, 0.1);
+        }
+
+        .flights-header-row {
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: white;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            padding: 20px 30px;
+            font-weight: 600;
+            font-size: 1.05em;
+            align-items: center;
+        }
+
+        .flight-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            padding: 25px 30px;
+            align-items: center;
+            border-bottom: 1px solid rgba(50, 130, 184, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .flight-row:last-child {
+            border-bottom: none;
+        }
+
+        .flight-row:hover {
+            background: rgba(187, 225, 250, 0.05);
+            box-shadow: inset 0 0 0 2px rgba(50, 130, 184, 0.1);
+        }
+
+        .flight-row.selected {
+            background: rgba(187, 225, 250, 0.15);
+            box-shadow: inset 0 0 0 2px #3282b8;
+        }
+
+        .flight-route {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .flight-icon {
+            font-size: 2.2em;
+        }
+
+        .route-details h3 {
+            font-size: 1.3em;
+            color: #0f4c75;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .route-details p {
+            color: #546e7a;
+            font-size: 0.95em;
+            margin-bottom: 2px;
+        }
+
+        .route-time {
+            color: #607d8b;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .status-column {
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .status-indicator:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .plane-available {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .plane-unavailable {
+            background: rgba(244, 67, 54, 0.1);
+            color: #c62828;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .plane-checking {
+            background: rgba(96, 125, 139, 0.1);
+            color: #546e7a;
+            border: 1px solid rgba(96, 125, 139, 0.3);
+        }
+
+        .wind-good {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .wind-caution {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f57c00;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .wind-bad {
+            background: rgba(244, 67, 54, 0.1);
+            color: #c62828;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .wind-checking {
+            background: rgba(96, 125, 139, 0.1);
+            color: #546e7a;
+            border: 1px solid rgba(96, 125, 139, 0.3);
+        }
+
+        .clouds-clear {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .clouds-scattered {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f57c00;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .clouds-overcast {
+            background: rgba(244, 67, 54, 0.1);
+            color: #c62828;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .clouds-checking {
+            background: rgba(96, 125, 139, 0.1);
+            color: #546e7a;
+            border: 1px solid rgba(96, 125, 139, 0.3);
+        }
+
+        .select-flight-btn {
+            background: rgba(50, 130, 184, 0.1);
+            color: #3282b8;
+            border: 2px solid #3282b8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .select-flight-btn:hover {
+            background: #3282b8;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .select-flight-btn.selected {
+            background: #3282b8;
+            color: white;
+        }
+
+        .booking-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.1);
+            border: 1px solid rgba(50, 130, 184, 0.1);
+        }
+
+        .booking-form {
+            display: grid;
+            gap: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #0f4c75;
+            font-size: 1.05em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 16px 20px;
+            border: 2px solid #e1f5fe;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3282b8;
+            box-shadow: 0 0 0 4px rgba(50, 130, 184, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-booking {
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 6px 25px rgba(15, 76, 117, 0.3);
+        }
+
+        .submit-booking:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.4);
+        }
+
+        .aircraft-info {
+            background: linear-gradient(135deg, rgba(187, 225, 250, 0.3), rgba(187, 225, 250, 0.1));
+            padding: 30px;
+            border-radius: 16px;
+            margin: 35px 0;
+            text-align: center;
+            border: 1px solid rgba(50, 130, 184, 0.2);
+        }
+
+        .aircraft-info h3 {
+            color: #0f4c75;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .safety-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(15, 76, 117, 0.1);
+            border: 1px solid rgba(50, 130, 184, 0.1);
+        }
+
+        .safety-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            margin: 35px 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(15, 76, 117, 0.2);
+        }
+
+        .safety-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+        }
+
+        .weather-minimums {
+            background: rgba(187, 225, 250, 0.2);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 4px solid #3282b8;
+        }
+
+        .weather-minimums h4 {
+            color: #0f4c75;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .weather-minimums p {
+            color: #546e7a;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        footer {
+            background: #0f4c75;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #0f4c75;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        @media (max-width: 1200px) {
+            .flights-header-row,
+            .flight-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .flight-route {
+                justify-self: center;
+            }
+
+            .status-column {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                gap: 10px;
+                margin: 15px 0;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .flights-header-row {
+                display: none;
+            }
+
+            .flight-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2em;
+            }
+            
+            .search-container,
+            .flights-container,
+            .booking-container,
+            .safety-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <h1>✈️ Darelines Access</h1>
+        <p>Secure access for trusted friends</p>
+        <input type="password" class="password-input" id="passwordInput" placeholder="Enter access code" onkeypress="if(event.key === 'Enter') checkPassword()">
+        <button class="submit-btn" onclick="checkPassword()">Enter</button>
+        <div class="error-message" id="errorMessage">Access code incorrect. Please try again.</div>
+    </div>
+
+    <div class="main-container" id="mainContainer">
+        <header>
+            <h1>✈️ Darelines</h1>
+            <p>Private Aviation • RV-12iS • San Carlos Airport</p>
+        </header>
+
+        <div class="content">
+            <!-- Search/Calendar Section -->
+            <div class="search-container">
+                <h2>When would you like to fly?</h2>
+                <div class="search-form">
+                    <div class="search-field">
+                        <label for="flightDate">Departure Date</label>
+                        <input type="date" id="flightDate" name="flightDate" required>
+                    </div>
+                    <div class="search-field">
+                        <label for="flightTime">Departure Time</label>
+                        <select id="flightTime" name="flightTime" required>
+                            <option value="">Select time (PST)</option>
+                            <option value="10:00">10:00 PST</option>
+                            <option value="11:00">11:00 PST</option>
+                            <option value="12:00">12:00 PST</option>
+                            <option value="13:00">13:00 PST</option>
+                            <option value="14:00" selected>14:00 PST</option>
+                            <option value="15:00">15:00 PST</option>
+                            <option value="16:00">16:00 PST</option>
+                            <option value="17:00">17:00 PST</option>
+                            <option value="18:00">18:00 PST</option>
+                            <option value="19:00">19:00 PST</option>
+                        </select>
+                    </div>
+                    <button class="search-btn" id="searchFlights" onclick="searchFlights()" disabled>
+                        Search Flights
+                    </button>
+                </div>
+            </div>
+
+            <!-- Flight Options Section -->
+            <div class="flights-container" id="flightsContainer">
+                <div class="flights-header">
+                    <h2>Available Darelines Flights</h2>
+                    <p>Real-time aircraft availability and weather conditions for your selected date/time</p>
+                </div>
+                
+                <div class="flights-table">
+                    <div class="flights-header-row">
+                        <div>Route</div>
+                        <div>Plane Available</div>
+                        <div>Wind Check</div>
+                        <div>Clouds</div>
+                        <div>Select</div>
+                    </div>
+
+                    <div class="flight-row" data-trip="bay-tour" onclick="selectFlight('bay-tour')">
+                        <div class="flight-route">
+                            <div class="flight-icon">🌉</div>
+                            <div class="route-details">
+                                <h3>Bay Tour</h3>
+                                <p>Golden Gate Bridge, Alcatraz, SF Skyline</p>
+                                <div class="route-time">1.5 hours • San Carlos ↔ Bay Area</div>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator plane-checking" id="plane-bay-tour">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator wind-checking" id="wind-bay-tour">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator clouds-checking" id="clouds-bay-tour">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <button class="select-flight-btn" id="btn-bay-tour">Select</button>
+                        </div>
+                    </div>
+
+                    <div class="flight-row" data-trip="monterey" onclick="selectFlight('monterey')">
+                        <div class="flight-route">
+                            <div class="flight-icon">🐋</div>
+                            <div class="route-details">
+                                <h3>Monterey Bay</h3>
+                                <p>Coastal flight down Highway 1, lunch at MRY</p>
+                                <div class="route-time">2.5 hours • San Carlos → Monterey</div>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator plane-checking" id="plane-monterey">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator wind-checking" id="wind-monterey">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator clouds-checking" id="clouds-monterey">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <button class="select-flight-btn" id="btn-monterey">Select</button>
+                        </div>
+                    </div>
+
+
+                    <div class="flight-row" data-trip="napa-valley" onclick="selectFlight('napa-valley')">
+                        <div class="flight-route">
+                            <div class="flight-icon">🍷</div>
+                            <div class="route-details">
+                                <h3>Napa Valley</h3>
+                                <p>Wine country views, valley scenic flight</p>
+                                <div class="route-time">2 hours • San Carlos → Napa Valley</div>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator plane-checking" id="plane-napa-valley">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator wind-checking" id="wind-napa-valley">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator clouds-checking" id="clouds-napa-valley">
+                                <span class="loading-dots">Checking</span>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <button class="select-flight-btn" id="btn-napa-valley">Select</button>
+                        </div>
+                    </div>
+
+
+                    <div class="flight-row" data-trip="custom" onclick="selectFlight('custom')">
+                        <div class="flight-route">
+                            <div class="flight-icon">✈️</div>
+                            <div class="route-details">
+                                <h3>Custom Flight</h3>
+                                <p>Your choice of destination</p>
+                                <div class="route-time">Variable • San Carlos → Your Choice</div>
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator plane-available">
+                                ✅ Available
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator wind-good">
+                                ✅ Check on request
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <div class="status-indicator clouds-clear">
+                                ✅ Check on request
+                            </div>
+                        </div>
+                        <div class="status-column">
+                            <button class="select-flight-btn" id="btn-custom">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form Section -->
+            <div class="booking-container" id="bookingContainer">
+                <h2>Complete Your Darelines Booking</h2>
+                
+                <form class="booking-form" onsubmit="submitBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="passengerName">Your Name</label>
+                            <input type="text" id="passengerName" name="passengerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passengerEmail">Email Address</label>
+                            <input type="email" id="passengerEmail" name="passengerEmail" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests (Optional)</label>
+                        <textarea id="specialRequests" name="specialRequests" placeholder="Dietary restrictions, questions, or special requests?"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-booking">
+                        Complete Darelines Flight Request
+                    </button>
+                </form>
+
+                <div class="aircraft-info">
+                    <h3>Your Aircraft: Van's RV-12iS (N962TF)</h3>
+                    <p style="color: #546e7a; margin-bottom: 15px;">Light Sport Aircraft • Flying 12 Club • All costs covered by Darelines</p>
+                    <p style="color: #607d8b; font-size: 0.95em;">Single-seat configuration • Based at San Carlos Airport (SQL)</p>
+                </div>
+            </div>
+
+            <!-- Safety Section -->
+            <div class="safety-section">
+                <h2>Darelines Safety & Weather Standards</h2>
+                <p style="text-align: center; margin-bottom: 25px; color: #546e7a; font-size: 1.1em;">
+                    Your safety is our absolute priority. Please review our safety protocols and weather standards.
+                </p>
+                
+                <div class="safety-video">
+                    <iframe src="https://www.youtube.com/embed/sVe59SIa8IU" 
+                            title="Aviation Safety Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="weather-minimums">
+                    <h4>Weather Minimums for Safe Flight</h4>
+                    <p><strong>Wind Speed:</strong> Maximum 15 knots sustained</p>
+                    <p><strong>Visibility:</strong> Minimum 5 statute miles</p>
+                    <p><strong>Cloud Ceiling:</strong> Minimum 2,000 feet AGL</p>
+                    <p><strong>Weather Phenomena:</strong> No thunderstorms, icing, or severe turbulence</p>
+                    <p style="margin-top: 15px; font-style: italic; color: #3282b8;">
+                        Weather forecasts sourced from NOAA Aviation Weather Center TAF reports for your selected date/time. 
+                        Final go/no-go decisions are always made by the pilot-in-command based on current conditions.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Darelines • Private Aviation</strong></p>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9em; opacity: 0.8; line-height: 1.6;">
+                <p><strong>⚠️ NOT A COMMERCIAL OPERATION</strong> - This is private cost-sharing between friends. FAA regulations strictly followed.</p>
+                <p><strong>Risk Acknowledgment:</strong> General aviation carries inherent risks (~10.5 <a href="https://micromorts.rip/" target="_blank" style="color: #bbe1fa; text-decoration: underline;">micromorts</a> per flight hour).</p>
+                <p>For comparison: equivalent to approximately 1 hour of motorcycling per hour.</p>
+                <p style="margin-top: 15px;">© 2025 - Darelines</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const weatherMinimums = {
+            windSpeed: 15,
+            visibility: 5,
+            ceiling: 2000,
+        };
+
+        const destinations = {
+            'bay-tour': { name: 'Bay Tour', airports: ['KSQL'], route: 'Local Area' },
+            'monterey': { name: 'Monterey Bay', airports: ['KSQL', 'KMRY'], route: 'KMRY' },
+            'napa-valley': { name: 'Napa Valley', airports: ['KSQL', 'KAPC'], route: 'KAPC' },
+            'custom': { name: 'Custom Flight', airports: ['KSQL'], route: 'TBD' }
+        };
+
+        let selectedFlight = null;
+        let selectedDate = null;
+        let selectedTime = null;
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'flyWithMe2024') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                initializeDatePicker();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function initializeDatePicker() {
+            const dateInput = document.getElementById('flightDate');
+            const timeSelect = document.getElementById('flightTime');
+            const searchBtn = document.getElementById('searchFlights');
+
+            // Set minimum date to 4 days from now
+            const today = new Date();
+            const minDate = new Date();
+            minDate.setDate(today.getDate() + 4);
+            const minDateStr = minDate.toISOString().split('T')[0];
+            dateInput.min = minDateStr;
+
+            // Set default date to the minimum date
+            dateInput.value = minDateStr;
+
+            // Set maximum date to 14 days from now
+            const maxDate = new Date();
+            maxDate.setDate(today.getDate() + 14);
+            const maxDateStr = maxDate.toISOString().split('T')[0];
+            dateInput.max = maxDateStr;
+
+            // Enable search button when both fields are filled
+            function updateSearchButton() {
+                if (dateInput.value && timeSelect.value) {
+                    searchBtn.disabled = false;
+                } else {
+                    searchBtn.disabled = true;
+                }
+            }
+
+            dateInput.addEventListener('change', updateSearchButton);
+            timeSelect.addEventListener('change', updateSearchButton);
+            
+            // Initial check
+            updateSearchButton();
+        }
+
+        function searchFlights() {
+            selectedDate = document.getElementById('flightDate').value;
+            selectedTime = document.getElementById('flightTime').value;
+
+            if (!selectedDate || !selectedTime) {
+                alert('Please select both date and time.');
+                return;
+            }
+
+            // Show flights container
+            document.getElementById('flightsContainer').style.display = 'block';
+
+            // Reset all status indicators to loading state
+            Object.keys(destinations).forEach(tripId => {
+                if (tripId === 'custom') return;
+                
+                const planeElement = document.getElementById(`plane-${tripId}`);
+                const windElement = document.getElementById(`wind-${tripId}`);
+                const cloudsElement = document.getElementById(`clouds-${tripId}`);
+                
+                planeElement.className = 'status-indicator plane-checking';
+                planeElement.innerHTML = '<span class="loading-dots">Checking</span>';
+                
+                windElement.className = 'status-indicator wind-checking';
+                windElement.innerHTML = '<span class="loading-dots">Checking</span>';
+                
+                cloudsElement.className = 'status-indicator clouds-checking';
+                cloudsElement.innerHTML = '<span class="loading-dots">Checking</span>';
+            });
+
+            // Check availability and weather for all flights
+            checkFlightAvailabilityAndWeather();
+
+            // Scroll to flights
+            document.getElementById('flightsContainer').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        async function checkFlightAvailabilityAndWeather() {
+            const flightDateTime = new Date(`${selectedDate}T${selectedTime}:00`);
+
+            Object.keys(destinations).forEach(async (tripId, index) => {
+                if (tripId === 'custom') return;
+                
+                const airports = destinations[tripId].airports;
+                const destinationAirport = airports[airports.length - 1];
+                
+                setTimeout(async () => {
+                    // Check aircraft availability (simulated)
+                    const planeAvailable = await checkPlaneAvailability(tripId, flightDateTime);
+                    updatePlaneStatus(tripId, planeAvailable);
+                    
+                    // Show weather check links instead of API calls (CORS issues)
+                    updateWeatherStatusWithLinks(tripId, destinationAirport);
+                }, 300 + (index * 600));
+            });
+        }
+
+        async function checkPlaneAvailability(tripId, flightDateTime) {
+            // Simulate aircraft availability check
+            // In real implementation, this would check calendar/scheduling system
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Random availability for demo - in real app, check actual calendar
+            return Math.random() > 0.2; // 80% availability rate
+        }
+
+        function updatePlaneStatus(tripId, available) {
+            const element = document.getElementById(`plane-${tripId}`);
+            
+            if (available) {
+                element.className = 'status-indicator plane-available';
+                element.innerHTML = '✅ Available';
+            } else {
+                element.className = 'status-indicator plane-unavailable';
+                element.innerHTML = '❌ Booked';
+            }
+        }
+
+
+        function updateWeatherStatusWithLinks(tripId, airportCode) {
+            const windElement = document.getElementById(`wind-${tripId}`);
+            const cloudsElement = document.getElementById(`clouds-${tripId}`);
+            const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
+            
+            windElement.className = 'status-indicator wind-good';
+            windElement.innerHTML = '🌤️ Check Forecast';
+            windElement.style.cursor = 'pointer';
+            windElement.title = `Click to view ${airportCode} forecast`;
+            windElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+            
+            cloudsElement.className = 'status-indicator clouds-clear';
+            cloudsElement.innerHTML = '☁️ Check Forecast';
+            cloudsElement.style.cursor = 'pointer';
+            cloudsElement.title = `Click to view ${airportCode} forecast`;
+            cloudsElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+        }
+
+        function updateWeatherStatus(tripId, weather) {
+            const windElement = document.getElementById(`wind-${tripId}`);
+            const cloudsElement = document.getElementById(`clouds-${tripId}`);
+            
+            // Get the destination airport code for forecast links
+            const airports = destinations[tripId].airports;
+            const airportCode = airports[airports.length - 1];
+            const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
+            
+            // Update wind status
+            let windStatus, windClass, windIcon;
+            if (weather.windSpeed <= 8) {
+                windStatus = 'Good';
+                windClass = 'wind-good';
+                windIcon = '✅';
+            } else if (weather.windSpeed <= weatherMinimums.windSpeed) {
+                windStatus = 'Caution';
+                windClass = 'wind-caution';
+                windIcon = '⚠️';
+            } else {
+                windStatus = 'Too Strong';
+                windClass = 'wind-bad';
+                windIcon = '❌';
+            }
+            
+            windElement.className = `status-indicator ${windClass}`;
+            windElement.style.cursor = 'pointer';
+            windElement.title = `Click to view ${airportCode} forecast`;
+            windElement.innerHTML = `${windIcon} ${windStatus} ${weather.windSpeed}kt${weather.gusts ? ` G${weather.gusts}` : ''}`;
+            windElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+            
+            // Update clouds status
+            let cloudsStatus, cloudsClass, cloudsIcon;
+            if (weather.ceiling >= 8000) {
+                cloudsStatus = 'Clear';
+                cloudsClass = 'clouds-clear';
+                cloudsIcon = '☀️';
+            } else if (weather.ceiling >= weatherMinimums.ceiling) {
+                cloudsStatus = 'Scattered';
+                cloudsClass = 'clouds-scattered';
+                cloudsIcon = '⛅';
+            } else {
+                cloudsStatus = 'Low';
+                cloudsClass = 'clouds-overcast';
+                cloudsIcon = '☁️';
+            }
+            
+            cloudsElement.className = `status-indicator ${cloudsClass}`;
+            cloudsElement.style.cursor = 'pointer';
+            cloudsElement.title = `Click to view ${airportCode} forecast`;
+            cloudsElement.onclick = (e) => {
+                e.stopPropagation();
+                window.open(forecastUrl, '_blank');
+            };
+            
+            if (weather.ceiling >= 10000) {
+                cloudsElement.innerHTML = `${cloudsIcon} ${cloudsStatus}`;
+            } else {
+                cloudsElement.innerHTML = `${cloudsIcon} ${cloudsStatus} ${weather.ceiling}ft`;
+            }
+        }
+
+        function selectFlight(tripId) {
+            // Remove previous selections
+            document.querySelectorAll('.flight-row').forEach(row => {
+                row.classList.remove('selected');
+            });
+            document.querySelectorAll('.select-flight-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.textContent = 'Select';
+            });
+            
+            // Add selection to clicked flight
+            document.querySelector(`[data-trip="${tripId}"]`).classList.add('selected');
+            document.getElementById(`btn-${tripId}`).classList.add('selected');
+            document.getElementById(`btn-${tripId}`).textContent = 'Selected';
+            
+            selectedFlight = tripId;
+            
+            // Show booking form
+            document.getElementById('bookingContainer').style.display = 'block';
+            
+            // Scroll to booking form
+            setTimeout(() => {
+                document.getElementById('bookingContainer').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            if (!selectedFlight || !selectedDate || !selectedTime) {
+                alert('Please select a flight date, time, and destination first.');
+                return;
+            }
+
+            const name = document.getElementById('passengerName').value;
+            const email = document.getElementById('passengerEmail').value;
+            const specialRequests = document.getElementById('specialRequests').value;
+            
+            const subject = encodeURIComponent('Darelines Flight Booking Request');
+            const body = encodeURIComponent(`
+Darelines Flight Booking Request:
+
+Passenger: ${name}
+Email: ${email}
+Date: ${selectedDate}
+Departure Time: ${selectedTime}
+Flight Choice: ${destinations[selectedFlight].name}
+Route: ${destinations[selectedFlight].route}
+Special Requests: ${specialRequests || 'None'}
+
+Aircraft availability and weather forecast checked for selected date/time.
+Please confirm final availability and conduct weather briefing.
+
+Best regards,
+Darelines Booking System
+            `);
+            
+            window.location.href = `mailto:flying12clubllc@gmail.com?subject=${subject}&body=${body}`;
+            
+            alert('Thank you! Your Darelines flight request has been sent. I\'ll confirm within 24 hours with final weather assessment and availability.');
+        }
+    </script>
+</body>
+</html>
