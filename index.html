@@ -1320,7 +1320,6 @@
                 if (tripId === 'custom') return;
                 
                 const windElement = document.getElementById(`wind-${tripId}`);
-                const cloudsElement = document.getElementById(`clouds-${tripId}`);
                 
                 if (windElement) {
                     windElement.className = 'status-indicator wind-checking';
@@ -1330,11 +1329,6 @@
                             <span class="weather-label">checking</span>
                         </div>
                     `;
-                }
-                
-                if (cloudsElement) {
-                    cloudsElement.className = 'status-indicator clouds-checking';
-                    cloudsElement.innerHTML = '-- checking';
                 }
             });
 
@@ -1418,7 +1412,6 @@
         
         function updateWeatherFromWindyData(tripId, airportCode, data) {
             const windElement = document.getElementById(`wind-${tripId}`);
-            const cloudsElement = document.getElementById(`clouds-${tripId}`);
             
             // Calculate wind speed from u/v components (first data point)
             const windU = data['wind_u-surface'][0];
@@ -1426,22 +1419,12 @@
             const windSpeed = Math.sqrt(windU * windU + windV * windV);
             const windSpeedKnots = Math.round(windSpeed * 1.944); // Convert m/s to knots
             
-            // Get gust and cloud data
+            // Get gust data
             const gustSpeed = data['gust-surface'] ? Math.round(data['gust-surface'][0] * 1.944) : null;
-            
-            // Calculate total cloud coverage from low/medium/high clouds
-            const lowClouds = data['lclouds-surface'] ? data['lclouds-surface'][0] : 0;
-            const midClouds = data['mclouds-surface'] ? data['mclouds-surface'][0] : 0;
-            const highClouds = data['hclouds-surface'] ? data['hclouds-surface'][0] : 0;
-            const totalCloudCover = Math.max(lowClouds, midClouds, highClouds); // Use highest layer
             
             console.log(`${airportCode} Weather:`, {
                 windSpeedKnots,
-                gustSpeed,
-                lowClouds,
-                midClouds,
-                highClouds,
-                totalCloudCover
+                gustSpeed
             });
             
             // Update wind status
@@ -1471,35 +1454,10 @@
                 e.stopPropagation();
                 window.open(forecastUrl, '_blank');
             };
-            
-            // Update clouds status
-            let cloudsStatus, cloudsClass, cloudsIcon;
-            if (totalCloudCover <= 25) {
-                cloudsStatus = 'Clear skies';
-                cloudsClass = 'clouds-clear';
-                cloudsIcon = '☀️';
-            } else if (totalCloudCover <= 75) {
-                cloudsStatus = 'Partly cloudy';
-                cloudsClass = 'clouds-scattered';
-                cloudsIcon = '⛅';
-            } else {
-                cloudsStatus = 'Overcast';
-                cloudsClass = 'clouds-overcast';
-                cloudsIcon = '☁️';
-            }
-            
-            cloudsElement.className = `status-indicator ${cloudsClass}`;
-            cloudsElement.innerHTML = `${cloudsIcon} ${cloudsStatus}`;
-            cloudsElement.title = `${Math.round(totalCloudCover)}% cloud coverage`;
-            cloudsElement.onclick = (e) => {
-                e.stopPropagation();
-                window.open(forecastUrl, '_blank');
-            };
         }
         
         function updateWeatherStatusWithLinks(tripId, airportCode) {
             const windElement = document.getElementById(`wind-${tripId}`);
-            const cloudsElement = document.getElementById(`clouds-${tripId}`);
             const forecastUrl = `https://www.windy.com/${airportCode.toLowerCase()}`;
             
             windElement.className = 'status-indicator wind-checking';
@@ -1511,14 +1469,6 @@
             `;
             windElement.title = `Click to view ${airportCode} forecast`;
             windElement.onclick = (e) => {
-                e.stopPropagation();
-                window.open(forecastUrl, '_blank');
-            };
-            
-            cloudsElement.className = 'status-indicator clouds-checking';
-            cloudsElement.innerHTML = '-- checking clouds';
-            cloudsElement.title = `Click to view ${airportCode} forecast`;
-            cloudsElement.onclick = (e) => {
                 e.stopPropagation();
                 window.open(forecastUrl, '_blank');
             };
