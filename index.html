@@ -869,7 +869,7 @@
                             <div class="flight-name">Bay Tour • Golden Gate Bridge</div>
                         </div>
                         <div class="flight-duration">
-                            <div>1 hr 30 min</div>
+                            <div>1 hr</div>
                         </div>
                         <div class="flight-route-info">
                             <div class="flight-stops">Nonstop</div>
@@ -897,11 +897,11 @@
                             <div class="flight-name">Monterey Bay • Coastal Route</div>
                         </div>
                         <div class="flight-duration">
-                            <div>2 hr 30 min</div>
+                            <div>2 hr</div>
                         </div>
                         <div class="flight-route-info">
                             <div class="flight-stops">1 stop</div>
-                            <div class="flight-airports">SQL–MRY</div>
+                            <div class="flight-airports">1 hr MRY</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-monterey">
@@ -926,10 +926,10 @@
                             <div class="flight-name">Napa Valley • Wine Country</div>
                         </div>
                         <div class="flight-duration">
-                            <div>2 hr</div>
+                            <div>1 hr 30 min</div>
                         </div>
                         <div class="flight-route-info">
-                            <div class="flight-stops">Nonstop</div>
+                            <div class="flight-stops">Scenic route</div>
                             <div class="flight-airports">SQL–APC</div>
                         </div>
                         <div class="status-column">
@@ -1263,21 +1263,21 @@
             const startTime = new Date();
             startTime.setHours(hours, minutes, 0);
             
-            // Bay Tour - 1.5 hours
+            // Bay Tour - 1 hour flight
             const bayEnd = new Date(startTime);
-            bayEnd.setMinutes(bayEnd.getMinutes() + 90);
+            bayEnd.setMinutes(bayEnd.getMinutes() + 60);
             document.getElementById('time-bay-tour').textContent = 
                 `${formatTime(startTime)} – ${formatTime(bayEnd)}`;
             
-            // Monterey - 2.5 hours  
+            // Monterey - 30 min flight + 1 hr stop + 30 min return = 2 hours total
             const mryEnd = new Date(startTime);
-            mryEnd.setMinutes(mryEnd.getMinutes() + 150);
+            mryEnd.setMinutes(mryEnd.getMinutes() + 120);
             document.getElementById('time-monterey').textContent = 
                 `${formatTime(startTime)} – ${formatTime(mryEnd)}`;
             
-            // Napa - 2 hours
+            // Napa - 30 min flight + 30 min scenic + 30 min return = 1.5 hours
             const napaEnd = new Date(startTime);
-            napaEnd.setMinutes(napaEnd.getMinutes() + 120);
+            napaEnd.setMinutes(napaEnd.getMinutes() + 90);
             document.getElementById('time-napa-valley').textContent = 
                 `${formatTime(startTime)} – ${formatTime(napaEnd)}`;
         }
