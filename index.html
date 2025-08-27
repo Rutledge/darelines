@@ -796,6 +796,11 @@
             transform: scale(1.05);
         }
 
+        .phx-image.clicked {
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
+        }
+
         .phx-message h3 {
             margin: 0 0 8px 0;
             color: #202124;
@@ -1403,25 +1408,13 @@
         }
 
         function phxClick() {
-            const phxMessages = [
-                "Woof! Remember, this is just for coordinating with friends!",
-                "Good boy! You clicked the guard dog! 🐕",
-                "PHX here - keeping everyone safe and legal!",
-                "Woof woof! Just making sure you understand the rules!",
-                "Guard dog on duty - protecting against FAA violations!"
-            ];
-            const randomMessage = phxMessages[Math.floor(Math.random() * phxMessages.length)];
+            const phxImage = document.querySelector('.phx-image');
+            phxImage.classList.add('clicked');
             
-            // Temporarily show the message
-            const messageElement = document.querySelector('.phx-message p');
-            const originalMessage = messageElement.innerHTML;
-            messageElement.innerHTML = `"${randomMessage}"`;
-            messageElement.style.color = '#1a73e8';
-            
+            // Remove the clicked class after animation
             setTimeout(() => {
-                messageElement.innerHTML = originalMessage;
-                messageElement.style.color = '';
-            }, 2000);
+                phxImage.classList.remove('clicked');
+            }, 300);
         }
         
         const weatherMinimums = {
