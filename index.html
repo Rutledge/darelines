@@ -922,15 +922,15 @@
                             <div class="flight-icon">🍷</div>
                         </div>
                         <div class="flight-time-info">
-                            <div class="flight-time" id="time-napa-valley">10:00 AM – 12:00 PM</div>
-                            <div class="flight-name">Napa Valley • Wine Country</div>
+                            <div class="flight-time" id="time-sonoma">10:00 AM – 12:00 PM</div>
+                            <div class="flight-name">Sonoma County • Wine Country</div>
                         </div>
                         <div class="flight-duration">
                             <div>1 hr 30 min</div>
                         </div>
                         <div class="flight-route-info">
-                            <div class="flight-stops">Scenic route</div>
-                            <div class="flight-airports">SQL–APC</div>
+                            <div class="flight-stops">1 stop</div>
+                            <div class="flight-airports">45 min STS</div>
                         </div>
                         <div class="status-column">
                             <div class="status-indicator wind-checking" id="wind-napa-valley">
@@ -1080,7 +1080,7 @@
         const destinations = {
             'bay-tour': { name: 'Bay Tour', airports: ['KSQL'], route: 'Local Area' },
             'monterey': { name: 'Monterey Bay', airports: ['KSQL', 'KMRY'], route: 'KMRY' },
-            'napa-valley': { name: 'Napa Valley', airports: ['KSQL', 'KAPC'], route: 'KAPC' },
+            'napa-valley': { name: 'Sonoma County', airports: ['KSQL', 'KSTS'], route: 'KSTS' },
             'custom': { name: 'Custom Flight', airports: ['KSQL'], route: 'TBD' }
         };
 
@@ -1275,11 +1275,11 @@
             document.getElementById('time-monterey').textContent = 
                 `${formatTime(startTime)} – ${formatTime(mryEnd)}`;
             
-            // Napa - 30 min flight + 30 min scenic + 30 min return = 1.5 hours
-            const napaEnd = new Date(startTime);
-            napaEnd.setMinutes(napaEnd.getMinutes() + 90);
-            document.getElementById('time-napa-valley').textContent = 
-                `${formatTime(startTime)} – ${formatTime(napaEnd)}`;
+            // Sonoma - 25 min flight + 45 min stop + 25 min return = 1.5 hours
+            const sonomaEnd = new Date(startTime);
+            sonomaEnd.setMinutes(sonomaEnd.getMinutes() + 90);
+            document.getElementById('time-sonoma').textContent = 
+                `${formatTime(startTime)} – ${formatTime(sonomaEnd)}`;
         }
         
         function formatTime(date) {
@@ -1405,7 +1405,7 @@
             const airports = {
                 'KSQL': { lat: 37.512, lon: -122.250 }, // San Carlos
                 'KMRY': { lat: 36.587, lon: -121.843 }, // Monterey
-                'KAPC': { lat: 38.213, lon: -122.281 }  // Napa
+                'KSTS': { lat: 38.509, lon: -122.813 }  // Sonoma County (Santa Rosa)
             };
             return airports[airportCode] || { lat: 37.512, lon: -122.250 };
         }
