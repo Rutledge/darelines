@@ -1072,7 +1072,7 @@
                         lat: airportCoords.lat,
                         lon: airportCoords.lon,
                         model: 'gfs',
-                        parameters: ['wind', 'windGust', 'cloudcover'],
+                        parameters: ['wind', 'windGust', 'lclouds', 'mclouds', 'hclouds'],
                         levels: ['surface'],
                         step: 3
                     })
@@ -1116,12 +1116,20 @@
             
             // Get gust and cloud data
             const gustSpeed = data.windGust ? Math.round(data.windGust[0] * 1.944) : null;
-            const cloudCover = data.cloudcover ? data.cloudcover[0] : 0;
+            
+            // Calculate total cloud coverage from low/medium/high clouds
+            const lowClouds = data.lclouds ? data.lclouds[0] : 0;
+            const midClouds = data.mclouds ? data.mclouds[0] : 0;
+            const highClouds = data.hclouds ? data.hclouds[0] : 0;
+            const totalCloudCover = Math.max(lowClouds, midClouds, highClouds); // Use highest layer
             
             console.log(`${airportCode} Weather:`, {
                 windSpeedKnots,
                 gustSpeed,
-                cloudCover
+                lowClouds,
+                midClouds,
+                highClouds,
+                totalCloudCover
             });
             
             // Update wind status
@@ -1153,11 +1161,11 @@
             
             // Update clouds status
             let cloudsStatus, cloudsClass, cloudsIcon;
-            if (cloudCover <= 25) {
+            if (totalCloudCover <= 25) {
                 cloudsStatus = 'Clear';
                 cloudsClass = 'clouds-clear';
                 cloudsIcon = '☀️';
-            } else if (cloudCover <= 75) {
+            } else if (totalCloudCover <= 75) {
                 cloudsStatus = 'Scattered';
                 cloudsClass = 'clouds-scattered';
                 cloudsIcon = '⛅';
