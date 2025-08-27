@@ -1051,8 +1051,8 @@
     </div>
 
     <script>
-        const WINDY_API_KEY = '{{WINDY_API_KEY}}';
-        const SITE_PASSWORD = '{{SITE_PASSWORD}}';
+        const WINDY_API_KEY = '';
+        const SITE_PASSWORD = 'dare2fly';
         
         // Debug logging (remove in production)
         console.log('API Key length:', WINDY_API_KEY.length);
@@ -1540,32 +1540,32 @@
         }
 
         function selectFlight(tripId) {
-            // Clear previous selections
+            // Remove previous selections
             document.querySelectorAll('.flight-row').forEach(row => {
                 row.classList.remove('selected');
             });
+            document.querySelectorAll('.select-flight-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.textContent = 'Select';
+            });
             
             // Add selection to clicked flight
-            const selectedRow = document.querySelector(`[data-trip="${tripId}"]`);
-            if (selectedRow) {
-                selectedRow.classList.add('selected');
-            }
+            document.querySelector(`[data-trip="${tripId}"]`).classList.add('selected');
+            document.getElementById(`btn-${tripId}`).classList.add('selected');
+            document.getElementById(`btn-${tripId}`).textContent = 'Selected';
             
             selectedFlight = tripId;
             
             // Show booking form
-            const bookingContainer = document.getElementById('bookingContainer');
-            if (bookingContainer) {
-                bookingContainer.style.display = 'block';
-                
-                // Scroll to booking form
-                setTimeout(() => {
-                    bookingContainer.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }, 100);
-            }
+            document.getElementById('bookingContainer').style.display = 'block';
+            
+            // Scroll to booking form
+            setTimeout(() => {
+                document.getElementById('bookingContainer').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
         }
 
         function submitBooking(event) {
