@@ -1392,7 +1392,12 @@
             const tomorrow = new Date();
             tomorrow.setDate(today.getDate() + 1);
             
-            minBookingDate = tomorrow;  // Start from tomorrow
+            // Allow today if it's before 10 AM, otherwise start from tomorrow
+            const now = new Date();
+            const todayAt10AM = new Date(today);
+            todayAt10AM.setHours(10, 0, 0, 0);
+            
+            minBookingDate = now < todayAt10AM ? today : tomorrow;
             maxBookingDate = new Date();
             maxBookingDate.setDate(today.getDate() + 14);
             

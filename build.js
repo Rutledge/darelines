@@ -6,7 +6,7 @@ const html = fs.readFileSync('index.html', 'utf8');
 
 // Replace environment variable placeholders
 const windyApiKey = process.env.WINDY_API_KEY || '';
-const sitePassword = process.env.SITE_PASSWORD || 'puppy';
+const sitePassword = process.env.SITE_PASSWORD || 'weather';
 
 console.log('Environment variables:');
 console.log('WINDY_API_KEY length:', windyApiKey.length);
